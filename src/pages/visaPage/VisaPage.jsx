@@ -12,7 +12,7 @@ export default function VisaPage() {
 
       <div className=" 2xl:w-[1300px] !bg-[#]    flex flex-col  h-[100%] mx-auto">
         <VisaHeroSection />
-        <TaskBar />
+        {/* <TaskBar /> */}
         <ListingVisa />
       </div>
     </>

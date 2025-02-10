@@ -9,6 +9,7 @@ import QuickVisa from "../../Component/HomePage/QuickVisa";
 import VisaAcces from "../../Component/HomePage/VisaAcces";
 import VisaExperts from "../../Component/HomePage/VisaExperts";
 import Bottom from "../../Component/Bottom/Bottom";
+import Blog from "../../Component/HomePage/Blog";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
           <QuickVisa />
           <VisaAcces />
           <VisaExperts />
+          <Blog />
         </div>
       </div>
       <Bottom />
