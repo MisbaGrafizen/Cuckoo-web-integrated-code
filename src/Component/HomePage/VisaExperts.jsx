@@ -34,7 +34,7 @@ export default function VisaExperts() {
   };
   return (
     <>
-      <div className="flex font-Poppins mx-auto pb-[30px] mt-[20px] w-[89%] md:w-[75%]">
+      <div className="flex font-Poppins mx-auto mt-[20px] w-[89%] md:w-[75%]">
         <div className="flex flex-col gap-[60px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex font-[600]  mx-auto text-[25px]">
@@ -196,7 +196,7 @@ export default function VisaExperts() {
                 </div>
               </div> */}
             </div>
-            <div className=" flex gap-[20px] mb-[50px]  mx-auto md:mt-[30px]">
+            <div className=" flex gap-[20px] mb-[20px]  mx-auto md:mt-[30px]">
               <button className=" flex w-[50px]  justify-center items-center h-[50px] custom-shadow2 rounded-full"  onClick={() => sliderRef.current.slickPrev()} >
                 <i class="fa-solid fa-chevron-left"></i>
               </button>

@@ -4,9 +4,40 @@ import singapore from "../../../../public/Header/singapore.png";
 import thaiLand from "../../../../public/Header/thailand.jpg";
 import logo from "../../../../public/Header/logo.png";
 import flag from "../../../../public/Header/flag.png";
+import singaPore from "../../../../public/newIconHeader/merlion-park.png"
+import thailand from "../../../../public/newIconHeader/sanctuary-of-truth.png"
+import japan from "../../../../public/newIconHeader/nepal.png"
+import Kashmir from "../../../../public/newIconHeader/kashmir.png"
+import usa from "../../../../public/newIconHeader/usa.png"
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+
+
+
+
+
+
+
 
 export default function VisaHeader() {
-      const [activeButton, setActiveButton] = useState("Tours");
+      const [activeButton, setActiveButton] = useState("visa");
+ const [selected, setSelected] = useState("Explore");
+  const navigate = useNavigate();
+  const destinations = [
+    { name: "Explore", icon: <i className="fa-regular fa-fire-flame-curved text-[20px]"></i> },
+    { name: "Dubai", icon: <img src={dubai} className="w-[22px] h-[25px]" /> },
+    { name: "Singapore", icon: <img src={singaPore} className="w-[20px] h-[20px]" /> },
+    { name: "Thailand", icon: <img src={thailand} className="w-[22px] h-[25px]" /> },
+    { name: "Japan", icon: <img src={japan} className="w-[20px] h-[20px]" /> },
+    { name: "Kashmir", icon: <img src={Kashmir} className="w-[22px] h-[25px]" /> },
+    { name: "USA", icon: <img src={usa} className="w-[20px] h-[20px]" /> },
+  ];
+
+
+
+
+
   return (
   <>
 
@@ -165,11 +196,11 @@ export default function VisaHeader() {
       
                     <button
                       className={`relative z-10 flex w-[85px] text-[14px] rounded-[6px] p-[9px] text-center justify-center items-center ${
-                        activeButton === "Activities"
+                        activeButton === "visa"
                           ? "text-[#fff]"
                           : "text-[#000]"
                       }`}
-                      onClick={() => setActiveButton("Activities")}
+                      onClick={() => setActiveButton("visa")}
                     >
                       Visa
                     </button>

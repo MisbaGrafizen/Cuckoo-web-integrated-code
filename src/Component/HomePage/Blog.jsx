@@ -17,7 +17,7 @@ export default function Blog() {
  
         <div className="flex w-[100%] gap-[30px]md:mt-[0px] flex-col justify-between">
           <div className="md:w-[100%] flex md:flex-row flex-col  ">
-            <div className=" w-[100%] flex flex-row md:gap-[19px] md:overflow-x-hidden  gap-[20px] overflow-x-auto flex-shrink-0 py-[20px] ">
+            <div className=" w-[100%] flex flex-row md:gap-[19px] md:overflow-x-hidden  gap-[20px] overflow-x-auto flex-shrink-0 py] ">
 
 
                   <>

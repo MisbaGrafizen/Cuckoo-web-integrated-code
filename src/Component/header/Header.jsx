@@ -4,9 +4,45 @@ import singapore from "../../../public/Header/singapore.png";
 import thaiLand from "../../../public/Header/thailand.jpg";
 import logo from "../../../public/Header/logo.png";
 import flag from "../../../public/Header/flag.png";
-useState;
+import singaPore from "../../../public/newIconHeader/merlion-park.png"
+import thailand from "../../../public/newIconHeader/sanctuary-of-truth.png"
+import japan from "../../../public/newIconHeader/nepal.png"
+import Kashmir from "../../../public/newIconHeader/kashmir.png"
+import usa from "../../../public/newIconHeader/usa.png"
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+
+
+
+
 export default function Header() {
   const [activeButton, setActiveButton] = useState("Tours");
+  const [selected, setSelected] = useState("Explore");
+  const navigate = useNavigate();
+  const destinations = [
+    { name: "Explore", icon: <i className="fa-regular fa-fire-flame-curved text-[20px]"></i> },
+    { name: "Dubai", icon: <img src={dubai} className="w-[22px] h-[25px]" /> },
+    { name: "Singapore", icon: <img src={singaPore} className="w-[20px] h-[20px]" /> },
+    { name: "Thailand", icon: <img src={thailand} className="w-[22px] h-[25px]" /> },
+    { name: "Japan", icon: <img src={japan} className="w-[20px] h-[20px]" /> },
+    { name: "Kashmir", icon: <img src={Kashmir} className="w-[22px] h-[25px]" /> },
+    { name: "USA", icon: <img src={usa} className="w-[20px] h-[20px]" /> },
+  ];
+
+
+
+
+
+
+
+  const handleVisaClick = () => {
+    setActiveButton("Visa");  // First, update the active button
+    setTimeout(() => {
+      navigate("/visa");  // Navigate after animation delay
+    }, 300);  // Adjust delay to match the animation speed
+  };
+  
   return (
     <>
       <div className=" flex w-[100%]  z-[100] bg-white font-Poppins  fixed  ">
@@ -53,18 +89,11 @@ export default function Header() {
             <div className=" flex md:w-[75%] w-[95%]  2xl:w-[1360px]  relative items-center justify-between  gap-[10px] mx-auto">
               <div className="absolute left-0 flex md:hidden top-0 bottom-0 w-[30px] bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
               <div className=" flex w-[100%] pl-[20px]  md:w-[79%] 2xl:w-[85.5%]  md:pl-0 md:mt-0  mt-[10px] overflow-x-auto  scroll-smooth gap-[30px] md:gap-[40px] items-center justify-start flex-shrink-0">
-                <div className="flex flex-col gap-[5px] text-[#005f94] border-b-[2px] border-[#005f94]  pb-[4px] text-center w-fit flex-shrink-0">
-                  <i className="fa-regular  text-[20px] text-[#005f94]    fa-fire-flame-curved"></i>
-                  <h2 className=" text-[12px] font-[500]">Explore</h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[4px]  items-center  text-center w-fit">
-                  <img className=" w-[22px] h-[25px]" src={dubai} />
-                  <h2 className=" text-[12px] font-[500]">Dubai</h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[px] items-center justify-center   text-center w-fit">
-                  <img className=" w-[20px] h-[20px]" src={singapore} />
+
+                {/* <div className="flex flex-col gap-[5px] pb-[px] items-center justify-center   text-center w-fit">
+                  <img className=" w-[20px] h-[20px]" src={usa} />
                   <h2 className=" text-[12px] items-center font-[500]">
-                    Singapore
+                    Usa
                   </h2>
                 </div>
                 <div className="flex flex-col gap-[5px] pb-[4px]  items-center  text-center w-fit">
@@ -96,27 +125,38 @@ export default function Header() {
                   <h2 className=" text-[12px] items-center font-[500]">
                     Singapore
                   </h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[4px]  items-center  text-center w-fit">
-                  <img className=" w-[22px] h-[25px]" src={dubai} />
-                  <h2 className=" text-[12px] font-[500]">Dubai</h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[px] items-center justify-center   text-center w-fit">
-                  <img className=" w-[20px] h-[20px]" src={singapore} />
-                  <h2 className=" text-[12px] items-center font-[500]">
-                    Singapore
-                  </h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[4px]  items-center  text-center w-fit">
-                  <img className=" w-[22px] h-[25px]" src={dubai} />
-                  <h2 className=" text-[12px] font-[500]">Dubai</h2>
-                </div>
-                <div className="flex flex-col gap-[5px] pb-[px] items-center justify-center   text-center w-fit">
-                  <img className=" w-[20px] h-[20px]" src={singapore} />
-                  <h2 className=" text-[12px] items-center font-[500]">
-                    Singapore
-                  </h2>
-                </div>
+                </div> */}
+
+
+
+
+                {destinations.map((dest, index) => (
+                  <div key={index} className="relative flex flex-col items-center cursor-pointer" onClick={() => setSelected(dest.name)}>
+                    <div className={`flex flex-col gap-[5px] pb-[4px] items-center text-center w-fit ${selected === dest.name ? "text-[#005f94] font-bold" : "text-[#333]"}`}>
+                      {dest.icon}
+                      <h2 className="text-[12px] font-[500]">{dest.name}</h2>
+                    </div>
+                    {selected === dest.name && (
+                      <>
+
+       
+                      {/* <motion.div
+                        layoutId="underline"
+                        className="absolute bottom-[-3px] left-1/2 transform -translate-x-1/2 w-full h-[2px] bg-[#005f94]"
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 0.3 }}
+                      /> */}
+                      <div className=" flex  h-[2px] w-[40px] bg-[#005f94]">
+
+                      </div>
+                      </>
+                    )}
+                  </div>
+                ))}
+
+
+
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-[30px] bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
               {/* <div className="w-fit flex gap-[10px] justify-center items-center h-fit p-[3.5px] border-[1px]  border-[#cbcbcb] rounded-[7px] my-[10px] text-[#000]">
@@ -141,7 +181,7 @@ export default function Header() {
                   Activities
                 </button>
               </div> */}
-              <div className="relative w-fit hidden md:flex gap-[10px] justify-center items-center h-fit p-[3.5px] border-[1px] border-[#cbcbcb] rounded-[7px] my-[10px] text-[#000] bg-[#ffffff]">
+              <div div className="relative w-fit hidden md:flex gap-[10px] justify-center items-center h-fit p-[3.5px] border-[1px] border-[#cbcbcb] rounded-[7px] my-[10px] text-[#000] bg-[#ffffff]" >
 
                 <div
                   className={`absolute top-0 left-0 h-[40px] mt-[2.8px] w-[85px] rounded-[6px] bg-[#005f94] transition-transform duration-300 ease-in-out`}
@@ -157,7 +197,7 @@ export default function Header() {
                 <button
                   className={`relative z-10 flex w-[85px] text-[14px] rounded-[6px] p-[9px] text-center justify-center items-center ${activeButton === "Tours" ? "text-[#fff]" : "text-[#000]"
                     }`}
-                  onClick={() => setActiveButton("Tours")}
+                  onClick={() => setActiveButton ("Tours")}
                 >
                   Holidays
                 </button>
@@ -168,7 +208,7 @@ export default function Header() {
                     ? "text-[#fff]"
                     : "text-[#000]"
                     }`}
-                  onClick={() => setActiveButton("Activities")}
+                  onClick={handleVisaClick}
                 >
                   Visa
                 </button>
