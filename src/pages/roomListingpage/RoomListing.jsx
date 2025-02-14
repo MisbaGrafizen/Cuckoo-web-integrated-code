@@ -28,6 +28,7 @@ import banner1 from "../../../public/Gallery/img3.jpg";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Component/header/Header";
 import RoomHeader from "../../Component/header/roomHeader/RoomHeader";
+import Footer from "../../Component/footer/Footer";
 
 // interface RoomProps {
 //   name: string;
@@ -369,7 +370,7 @@ export default function RoomListing() {
 
   return (
     <>
-<RoomHeader />
+{/* <RoomHeader /> */}
 
       <div className="flex flex-col w-full font-Poppins pt-[150px] min-h-screen">
         {/* <div className="hero-background"></div> */}
@@ -570,6 +571,8 @@ export default function RoomListing() {
           
         </div>
       </div>
+
+      <Footer/>
     </>
   );
 }

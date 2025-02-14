@@ -5,7 +5,7 @@ import image3 from "../../../../public/faq/image3.svg";
 import image4 from "../../../../public/faq/image4.svg";
 import image5 from "../../../../public/faq/image5.svg";
 import image6 from "../../../../public/faq/image6.svg";
-import mobile from "../../../../public/faq/mobile.webp";
+import mobile from "../../../../public/faq/dubai.jpeg";
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(null); // State to track which accordion is open
@@ -162,7 +162,7 @@ export default function Faq() {
             Cuckoo ?
           </h1>
           <div className=" flex justify-between w-[100%] ">
-            <div className="flex md:w-[50%] w-[100%] flex-col gap-[20px]">
+            <div className="flex md:w-[60%] w-[100%] flex-col gap-[20px]">
               {faqData.map((item, index) => (
                 <div
                   key={item.id}
@@ -199,8 +199,8 @@ export default function Faq() {
                 </div>
               ))}
             </div>
-            <div className=" md:flex hidden w-[40%] pr-[20px]">
-              {/* <img className=" flex w-[100%] h-[100%]" src={mobile} /> */}
+            <div className=" md:flex hidden w-[35%] pr-[20px]">
+              <img className=" flex w-[100%] object-cover rounded-br-[25px] rounded-tl-[25px] h-[500px]" src={mobile} />
             </div>
           </div>
         </div>

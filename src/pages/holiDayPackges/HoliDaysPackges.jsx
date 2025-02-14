@@ -6,7 +6,7 @@ import Itinerary from "../../Component/holidayPackgeMain/ItineraryButtonSection/
 export default function HoliDaysPackges() {
   return (
     <>
- <Header />
+
       <div className=" 2xl:w-[1400px] !bg-[#] pt-[130px]    flex flex-col  h-[100%] mx-auto">
 
 

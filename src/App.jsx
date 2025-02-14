@@ -6,9 +6,14 @@ import Loader from "./Component/loader/Loader";
 import ScrollToTop from "./Component/Scrooltop";
 import VisaPage from "./pages/visaPage/VisaPage";
 import HoliDaysPackges from "./pages/holiDayPackges/HoliDaysPackges";
-import AdminPage from "./pages/AdminPages/AdminPage";
+
 import RoomListing from "./pages/roomListingpage/RoomListing";
-import RoomCreate from "./pages/AdminPages/RoomCreate";
+
+import Country from "./pages/country/Country";
+import Passport from "./pages/passport/Passport";
+import Header from "./Component/header/Header";
+import ContactUs from "./pages/contactUs/ContactUs";
+import AllHolidayPackage from "./pages/holiDayPackges/AllHolidayPackage";
 
 
 
@@ -26,6 +31,7 @@ function App() {
 
   return (
     <>
+    <Header />
       <ScrollToTop />
       <div className="w-100 ease-soft-spring h-[100%] !bg-[#ffffff]  duration-1000 ">
 
@@ -33,10 +39,13 @@ function App() {
           <Route path="/" element={loading ? <Loader /> : <Home />} /> 
           <Route path="/visa" element={loading ? <Loader /> : <VisaPage />} /> 
           <Route path="/holiday-packges" element={loading ? <Loader /> : <HoliDaysPackges />} /> 
-          <Route path="/admin" element={loading ? <Loader /> : <AdminPage />} /> 
-          <Route path="/rooms" element={loading ? <Loader /> : <RoomListing />} /> 
-          <Route path="/rooms-create" element={loading ? <Loader /> : <RoomCreate />} /> 
 
+          <Route path="/rooms" element={loading ? <Loader /> : <RoomListing />} /> 
+
+          <Route path="/country" element={loading ? <Loader /> : <Country />} /> 
+          <Route path="/passport" element={loading ? <Loader /> : <Passport />} /> 
+          <Route path="/contact-us" element={loading ? <Loader /> : <ContactUs />} /> 
+          <Route path="/all-holiday-packages" element={loading ? <Loader /> : <AllHolidayPackage />} /> 
         </Routes>
       </div>
     </>

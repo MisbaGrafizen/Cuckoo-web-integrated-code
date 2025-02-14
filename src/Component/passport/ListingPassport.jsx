@@ -13,94 +13,131 @@ import { Select, SelectItem } from "@nextui-org/react";
 
 
 import { Phone, PhoneIcon as WhatsApp, } from "lucide-react"
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Document from "./Document";
-import Process from "./Process";
-export default function VisaSection() {
+import AllAboutPassport from "./AllAboutPassport";
+import PassportFaq from "./PassportFaq";
+
+export default function ListingPassport() {
   const visaPackages = [
     {
-      title: "48 Hours Transit Visa + Insurance (Covid)",
-      processingTime: "Upto 5 days",
-      stayPeriod: "2 days",
-      validity: "30 days",
-      entry: "Single",
-      fees: "1,999",
-      isPopular: false,
-    },
-    {
-      title: "30 Days Tourist Visa + Insurance (Covid)",
-      processingTime: "Upto 5 days",
-      stayPeriod: "30 days",
-      validity: "58 days",
-      entry: "Single",
-      fees: "7,799",
+      title: "New Passport Application",
+      processingTime: "Up to 10 days",
+      validity: "10 years",
+      entry: "Multiple",
+      fees: "3,499",
       isPopular: true,
     },
     {
-      title: "30 Days Family Tourist Visa + Insurance (Covid)",
-      processingTime: "Upto 5 days",
-      stayPeriod: "30 days",
-      validity: "58 days",
-      entry: "Single",
-      fees: "19,499",
+      title: "Tatkal Passport (Express)",
+      processingTime: "Up to 48 hours",
+      validity: "10 years",
+      entry: "Multiple",
+      fees: "7,999",
+      isPopular: true,
+    },
+    {
+      title: "Passport Renewal",
+      processingTime: "Up to 7 days",
+      validity: "10 years",
+      entry: "Multiple",
+      fees: "3,999",
+      isPopular: false,
+    },
+    {
+      title: "Lost/Damaged Passport Replacement",
+      processingTime: "Up to 14 days",
+      validity: "10 years",
+      entry: "Multiple",
+      fees: "5,999",
+      isPopular: false,
+    },
+    {
+      title: "Child Passport (Below 18 Years)",
+      processingTime: "Up to 10 days",
+      validity: "5 years",
+      entry: "Multiple",
+      fees: "2,499",
+      isPopular: false,
+    },
+    {
+      title: "Family Passport Package",
+      processingTime: "Up to 10 days",
+      validity: "10 years",
+      entry: "Multiple",
+      fees: "14,999",
       isPopular: true,
       includesNote: "(Includes 2 Adults + 1 Child)",
     },
-    {
-      title: "96 Hours Transit Visa + Insurance (Covid)",
-      processingTime: "Upto 5 days",
-      stayPeriod: "4 days",
-      validity: "30 days",
-      entry: "Single",
-      fees: "2,999",
-      isPopular: false,
-    },
-    {
-      title: "14 Days Tourist Visa + Insurance (Covid)",
-      processingTime: "Upto 5 days",
-      stayPeriod: "14 days",
-      validity: "58 days",
-      entry: "Single",
-      fees: "7,499",
-      isPopular: false,
-    },
-    {
-      title: "14 Days Tourist Visa (Express) + Insurance (Covid)",
-      processingTime: "Upto 48 hours",
-      stayPeriod: "14 days",
-      validity: "58 days",
-      entry: "Single",
-      fees: "8,799",
-      isPopular: false,
-    },
   ]
 
-  const [activeButton, setActiveButton] = useState("Types Of Visas");
+
+
+  // Define refs for each section
+  const documentRef = useRef(null);
+  const passportRef = useRef(null);
+  const faqRef = useRef(null);
+  const stepsRef = useRef(null);
+  const visitRef = useRef(null);
+
+  const [activeButton, setActiveButton] = useState("Types Of Passport");
 
   // Define button positions dynamically
   const buttonPositions = {
-    "Types Of Visas": 12,
-    Documents: 168,
-    Process: 293,
-    "Why Choose Us": 409,
-    "Sample Visa": 565,
-    FAQs: 700,
-    Embassy: 795,
-    "Visit Us": 902,
+    "Types Of Passport": 12,
+    Documents: 193,
+    "All About Passport": 327,
+
+
+    FAQs: 499,
+    "Steps To Apply": 588,
+    "Visit Us ": 742,
   };
 
   // Define different widths for each button dynamically
   const buttonWidths = {
-    "Types Of Visas": 130,
+    "Types Of Passport": 160,
     Documents: 110,
-    Process: 100,
-    "Why Choose Us": 140,
-    "Sample Visa": 130,
+    "All About Passport": 163,
+
+
     FAQs: 90,
-    Embassy: 100,
-    "Visit Us": 100,
+    "Steps To Apply": 149,
+    "Visit Us ": 100,
   };
 
+  const sectionRefs = {
+    "Types Of Passport": null, // No specific scroll target for this
+    Documents: documentRef,
+    "All About Passport": passportRef,
+    FAQs: faqRef,
+    "Steps To Apply": stepsRef,
+    "Visit Us ": visitRef,
+  };
+
+
+  const handleScroll = (section) => {
+    setActiveButton(section);
+    if (sectionRefs[section] && sectionRefs[section].current) {
+      sectionRefs[section].current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // const handleScroll = (section) => {
+  //   setActiveButton(section);
+
+  //   if (sectionRefs[section] && sectionRefs[section].current) {
+  //     const offset = 100; // Adjust this value to control how much space is left at the top
+
+  //     const element = sectionRefs[section].current;
+  //     const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+
+  //     window.scrollTo({
+  //       top: elementPosition - offset, // Adjust the position so the section starts visibly
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
   return (
     <>
       <nav className="border rounded-tl-[20px] shadow-md rounded-br-[20px]  w-[78%] mx-auto border-[#E5E5E5] relative">
@@ -120,10 +157,13 @@ export default function VisaSection() {
               <li key={item}>
                 <a
                   href="#"
-                  onClick={() => setActiveButton(item)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScroll(item);
+                  }}
                   className={`inline-block px-6 py-4 font-Poppins text-[15px] transition-colors relative -mb-[1px] ${activeButton === item
-                      ? "!text-white" // White text + Bold for active button
-                      : "text-[#666666] font-normal"
+                    ? "!text-white" // White text + Bold for active button
+                    : "text-[#666666] font-normal"
                     }`}
                 >
                   {item}
@@ -135,7 +175,7 @@ export default function VisaSection() {
       </nav>
 
       <div className="max-w-[1400px] font-Poppins w-[80%] mx-auto mt-[0px] p-6">
-        <h1 className="flex font-[600] text-[35px] mb-6">Types of Dubai Visas for Indians</h1>
+        <h1 className="flex font-[600] text-[35px] mb-6">Types of of Indian Passport</h1>
 
         <div className="grid grid-cols-1   lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2   flex flex-col gap-[30px]">
@@ -144,11 +184,15 @@ export default function VisaSection() {
                 <VisaCard key={index} {...pkg} />
               ))}
             </div>
-            <div className="  w-[100%] flex flex-col ">
+
+            <div ref={documentRef}>
               <Document />
             </div>
-            <div>
-              {/* <Process /> */}
+            <div ref={passportRef}>
+              <AllAboutPassport />
+            </div>
+            <div ref={faqRef}>
+              <PassportFaq />
             </div>
           </div>
           <div>
@@ -210,11 +254,11 @@ function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, is
         </div>
       </div>
     </div> */}
-      <div className="relative bg-white   h-[257px] font-Poppins p-5 shadow-md rounded-tl-[20px] rounded-br-[20px]">
+      <div className="relative bg-white   h-[290px] font-Poppins p-5 shadow-md rounded-tl-[20px] rounded-br-[20px]">
         {/* Gradient Border */}
-        <div className="absolute inset-0   h-[261px] rounded-tl-[20px] rounded-br-[20px] bg-gradient-to-r from-[#005f94] via-[#0095FF] to-[#00D4FF] p-[2px]">
+        <div className="absolute inset-0   h-[294px] rounded-tl-[20px] rounded-br-[20px] bg-gradient-to-r from-[#005f94] via-[#0095FF] to-[#00D4FF] p-[2px]">
           {/* Inner white content box */}
-          <div className=" w-full bg-white rounded-tl-[18px]   h-[257px]  rounded-br-[18px] p-5">
+          <div className=" w-full bg-white rounded-tl-[18px]   h-[290px]  rounded-br-[18px] p-5">
             {isPopular && (
               <div
                 className="absolute -top-1 -right-1  text-[10px] bg-gradient-to-r from-[#B5396B] to-[#6B39B5] text-white  font-medium py-1 px-3"
@@ -233,19 +277,23 @@ function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, is
 
             <div className="space-y-2.5">
               <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Processing time:</span>
+                <span className="text-[#666666] text-sm">Validity:</span>
                 <span className="text-[#1A1A1A] text-sm">{processingTime}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Stay period:</span>
+                <span className="text-[#666666] text-sm">Traveler Type:</span>
                 <span className="text-[#1A1A1A] text-sm">{stayPeriod}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Validity:</span>
+                <span className="text-[#666666] text-sm">Processing Time:</span>
                 <span className="text-[#1A1A1A] text-sm">{validity}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Entry:</span>
+                <span className="text-[#666666] text-sm">Processing Type:</span>
+                <span className="text-[#1A1A1A] text-sm">{entry}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#666666] text-sm">Assistance Type:</span>
                 <span className="text-[#1A1A1A] text-sm">{entry}</span>
               </div>
               <div className="flex justify-between items-center pt-1">
@@ -295,12 +343,10 @@ function ApplicationForm({ selectedVisa, setSelectedVisa, travellers, setTravell
               placeholder="Contact No"
               className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2]"
             />
-            <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
-              <option>Visa type</option>
-            </select>
-            <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
+
+            {/* <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
               <option>Travellers</option>
-            </select>
+            </select> */}
 
             <div className="flex justify-end items-center gap-2 pt-2 rounded-tl-[20px] rounded-br-[20px]">
               <span className="text-[#1A1A1A] font-medium">₹0</span>

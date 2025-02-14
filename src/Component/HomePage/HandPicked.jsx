@@ -4,10 +4,18 @@ import image2 from "../../../public/staffhand/image2.webp";
 import image3 from "../../../public/staffhand/image3.webp";
 
 import chair from "../../../public/staffhand/chair.svg";
+import { useNavigate } from "react-router-dom";
+import Inquariy from "../modal/Inquariy";
 
 export default function HandPicked() {
   const [selectedCategory, setSelectedCategory] = useState("Domestic");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate()
 
+
+  const handleAll = () => [
+    navigate("all-holiday-packages")
+  ]
   const domesticPackages = [
     { id: 1, image: image1, name: "Kashmir", price: "9,999" },
     { id: 2, image: image2, name: "Manali", price: "8,999" },
@@ -36,9 +44,9 @@ export default function HandPicked() {
             </h1>
             <div className=" absolute top-[30px]">
 
-   
-            <div className="relative max-w-[170px]  w-full md:max-w-[220px]">
-            <svg
+
+              <div className="relative max-w-[170px]  w-full md:max-w-[220px]">
+                <svg
                   viewBox="0 0 300 80"
                   className="w-full"
                   preserveAspectRatio="none"
@@ -117,9 +125,8 @@ export default function HandPicked() {
                     {[...Array(8)].map((_, i) => (
                       <path
                         key={i}
-                        d={`M${20 + i * 40},${30 + (i % 2) * 2} l${
-                          5 + (i % 3)
-                        },${-2 + (i % 2)}`}
+                        d={`M${20 + i * 40},${30 + (i % 2) * 2} l${5 + (i % 3)
+                          },${-2 + (i % 2)}`}
                         stroke="#F59E0B"
                         strokeWidth="1"
                         fill="none"
@@ -128,28 +135,26 @@ export default function HandPicked() {
                     ))}
                   </g>
                 </svg>
-            </div>
+              </div>
             </div>
             <p className="flex text-[16px] text-[#2a2a2a]">
               Indulge in unforgettable adventure with special tour plans.
             </p>
             <div className="flex w-fit gap-[15px] md:gap-[20px] mt-[10px] md:mt-[25px]">
               <button
-                className={`flex px-[5px]  py-[8px] w-[130px] items-center justify-center text-[16px]  rounded-[50px] ${
-                  selectedCategory === "Domestic"
-                    ? "bg-[#F59E0B] text-[#ffffff]"
-                    : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
-                }`}
+                className={`flex px-[5px]  py-[8px] w-[130px] items-center justify-center text-[16px]  rounded-[50px] ${selectedCategory === "Domestic"
+                  ? "bg-[#F59E0B] text-[#ffffff]"
+                  : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
+                  }`}
                 onClick={() => setSelectedCategory("Domestic")}
               >
                 Domestic
               </button>
               <button
-                className={`flex px-[5px]  py-[8px] w-[130px] items-center justify-center text-[16px]  rounded-[50px] ${
-                  selectedCategory === "International"
-          ? "bg-[#F59E0B] text-[#ffffff]"
-                    : "text-[#6F6F6F]  border-[1.2px]  border-[#6F6F6F]"
-                }`}
+                className={`flex px-[5px]  py-[8px] w-[130px] items-center justify-center text-[16px]  rounded-[50px] ${selectedCategory === "International"
+                  ? "bg-[#F59E0B] text-[#ffffff]"
+                  : "text-[#6F6F6F]  border-[1.2px]  border-[#6F6F6F]"
+                  }`}
                 onClick={() => setSelectedCategory("International")}
               >
                 International
@@ -188,8 +193,8 @@ export default function HandPicked() {
                           INR {pkg.price}
                         </h1>
                       </div>
-                      <button className=" flex w-[100%] justify-center items-center  font-[500] mt-[5px] rounded-[6px] py-[8px] bg-[#fff] ">
-                      Inquiry Now
+                      <button className=" flex w-[100%] justify-center items-center  font-[500] mt-[5px] rounded-[6px] py-[8px] bg-[#fff] "       onClick={() => setIsModalOpen(true)}>
+                        Inquiry Now
                       </button>
                     </div>
                   </div>
@@ -197,8 +202,22 @@ export default function HandPicked() {
               </div>
             ))}
           </div>
+
+
+          <div className=" flex w-[100%] ">
+            <button className=" flex gap-[15px] text-[#fff]  group font-Poppins rounded-md  py-[9px] px-[25px] items-center justify-center bg-[#005f94]" onClick={handleAll}>
+              View All <i class="fa-solid fa-arrow-right rotate-[330deg]"></i>
+            </button>
+          </div>
         </div>
       </div>
+
+
+
+
+ {isModalOpen && <Inquariy isOpen={isModalOpen} closeAndResetModal={() => setIsModalOpen(false)} />}
+
+
     </>
   );
 }

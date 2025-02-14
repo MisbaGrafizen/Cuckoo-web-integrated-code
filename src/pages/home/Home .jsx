@@ -10,11 +10,12 @@ import VisaAcces from "../../Component/HomePage/VisaAcces";
 import VisaExperts from "../../Component/HomePage/VisaExperts";
 import Bottom from "../../Component/Bottom/Bottom";
 import Blog from "../../Component/HomePage/Blog";
+import Footer from "../../Component/footer/Footer";
 
 export default function Home() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <HeroSection />
       <div className=" w-[100%]">
         <div className=" 2xl:w-[1400px] !bg-[#]    flex flex-col gap-[40px] h-[100%] mx-auto">
@@ -23,12 +24,13 @@ export default function Home() {
           <ExploreHolidays />
           <Faq />
           <QuickVisa />
-          <VisaAcces />
+          {/* <VisaAcces /> */}
           <VisaExperts />
           <Blog />
         </div>
       </div>
       <Bottom />
+      <Footer />
     </>
   );
 }

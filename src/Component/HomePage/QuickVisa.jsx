@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import image1 from "../../../public/staffhand/image1.webp";
 
 import image2 from "../../../public/staffhand/image3.webp";
 import image3 from "../../../public/staffhand/image2.webp";
-
+useRef
 export default function QuickVisa() {
   const [selectedCategory, setSelectedCategory] = useState("VisaFree");
-
+  const [isScrolledLeft, setIsScrolledLeft] = useState(true);
+  const [isScrolledRight, setIsScrolledRight] = useState(false);
+  const scrollRef = useRef(null);
   const visaFree = [
     { id: 1, image: image1, name: "Kashmir", price: "₹9999" },
     { id: 2, image: image2, name: "Manali", price: "₹8999" },
@@ -24,6 +26,28 @@ export default function QuickVisa() {
   ];
 
   const packages = selectedCategory === "VisaFree" ? visaFree : visaOn;
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -250, behavior: "smooth" });
+    }
+  };
+
+  // Function to scroll right
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 250, behavior: "smooth" });
+    }
+  };
+
+
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setIsScrolledLeft(scrollLeft <= 0);
+      setIsScrolledRight(scrollLeft + clientWidth >= scrollWidth);
+    }
+  };
 
   return (
     <>
@@ -133,8 +157,8 @@ export default function QuickVisa() {
             <div className="flex w-fit gap-[12px] md:gap-[20px] mt-[10px] md:mt-[25px]">
               <button
                 className={`flex px-[5px]  py-[8px] border-[1.2px] w-[110px] items-center justify-center text-[15px]  rounded-[50px] ${selectedCategory === "VisaFree"
-                    ? "bg-[#005f94] text-[#ffffff]"
-                    : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
+                  ? "bg-[#005f94] text-[#ffffff]"
+                  : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
                   }`}
                 onClick={() => setSelectedCategory("VisaFree")}
               >
@@ -142,8 +166,8 @@ export default function QuickVisa() {
               </button>
               <button
                 className={`flex px-[5px]  py-[8px] border-[1.2px] w-[140px] items-center justify-center text-[15px]  rounded-[50px] ${selectedCategory === "visaOn"
-                    ? "bg-[#005f94] text-[#ffffff]"
-                    : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
+                  ? "bg-[#005f94] text-[#ffffff]"
+                  : "text-[#6F6F6F]   border-[1.2px] border-[#6F6F6F]"
                   }`}
                 onClick={() => setSelectedCategory("visaOn")}
               >
@@ -151,24 +175,47 @@ export default function QuickVisa() {
               </button>
             </div>
           </div>
-          <div className="flex w-[100%] overflow-x-auto    gap-[15px] px-[10px] py-[10px] scroll-smooth scrollbar-hide">
-            {packages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className="flex-col justify-center group cursor-pointer items-center flex relative flex-shrink-0"
-              >
-                <img
-                  className="object-cover shadow-md w-[220px] h-[280px] rounded-[20px]"
-                  src={pkg.image}
-                  alt={pkg.name}
-                />
-                <div className="mt-[10px] flex">
-                  <p className="text-[20px] group-hover:text-[#FFD801] font-[600]">
-                    {pkg.name}
-                  </p>
+
+          <div className=" flex relative h-fit">
+
+
+            <button onClick={scrollLeft} className=" flex w-[50px] border-[1.5px]   bottom-[48%] bg-white  justify-center left-[-10px] items-center absolute z-[9] h-[50px] custom-shadow2 rounded-full" >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            {!isScrolledLeft && (
+            <div className="absolute left-0 top-0 h-full w-[50px] bg-gradient-to-r from-white to-transparent z-30 pointer-events-none"></div>
+          )}
+            <div ref={scrollRef} className="flex w-[97%]  mx-auto overflow-x-auto   relative   gap-[15px] px-[0px] py-[10px] scroll-smooth scrollbar-hide">
+
+              {packages.map((pkg) => (
+                <div
+                  key={pkg.id}
+                  className="flex-col justify-center  group cursor-pointer items-center flex relative flex-shrink-0"
+                >
+                  <img
+                    className="object-cover shadow-md w-[220px] h-[280px] rounded-[20px]"
+                    src={pkg.image}
+                    alt={pkg.name}
+                  />
+                  <div className="mt-[10px] flex">
+                    <p className="text-[20px] group-hover:text-[#FFD801] font-[600]">
+                      {pkg.name}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+
+
+            </div>
+              {!isScrolledRight && (
+                <div className="absolute right-0 top-0 h-full w-[50px] bg-gradient-to-l from-white to-transparent z-30 pointer-events-none"></div>
+              )}
+
+
+            <button onClick={scrollRight} className=" flex w-[50px] border-[1.5px]   bottom-[48%] bg-white  justify-center right-[-10px] items-center absolute z-[9] h-[50px] custom-shadow2 rounded-full"  >
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
           </div>
 
         </div>

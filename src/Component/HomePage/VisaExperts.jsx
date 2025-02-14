@@ -38,7 +38,7 @@ export default function VisaExperts() {
         <div className="flex flex-col gap-[60px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex font-[600]  mx-auto text-[25px]">
-              Popular Visa Assistance Destinations
+            Talk to Our Visa Experts
             </h1>
           </div>
           <div className="flex flex-col  w-[100%] gap-[15px] ">
