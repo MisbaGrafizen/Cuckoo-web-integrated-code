@@ -11,12 +11,30 @@ import Kashmir from "../../../public/newIconHeader/kashmir.png"
 import usa from "../../../public/newIconHeader/usa.png"
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ApiGet } from "../../helper/axios";
 
 
 
 
 
 export default function Header() {
+  const [countries, setCountries] = useState([]);
+
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try { 
+        const response = await ApiGet("/admin/countries");
+        console.log('response', response)
+        setCountries(response.country);
+      } catch (error) {
+        console.error("Error fetching visa packages:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
 
   const navigate = useNavigate();
   const destinations = [
@@ -129,11 +147,6 @@ export default function Header() {
               <div className="absolute left-0 flex md:hidden top-0 bottom-0 w-[30px] bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
               <div className=" flex w-[100%] pl-[20px]  md:w-[73%] 2xl:w-[85.5%]  md:pl-0 md:mt-0  mt-[10px] overflow-x-auto  scroll-smooth gap-[30px] md:gap-[40px] items-center justify-start flex-shrink-0">
 
-
-
-
-
-
                 {destinations.map((dest, index) => (
                   <div
                     key={index}
@@ -154,16 +167,8 @@ export default function Header() {
                   </div>
                 ))}
 
-
-
               </div>
               <div className="absolute right-0 top-0 bottom-0 w-[30px] bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-
-
-
-
-
-
 
               {location.pathname === "/visa" || location.pathname === "/passport" ? (
 

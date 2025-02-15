@@ -1,75 +1,77 @@
-import { Clock } from "lucide-react"
-
-
-import {
-  Card,
-  CardBody,
-  Input,
-
-
-  Button,
-} from "@nextui-org/react"
-import { Select, SelectItem } from "@nextui-org/react";
-
-
-import { Phone, PhoneIcon as WhatsApp, } from "lucide-react"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Document from "./Document";
 import AllAboutPassport from "./AllAboutPassport";
 import PassportFaq from "./PassportFaq";
+import { ApiGet } from "../../helper/axios";
 
 export default function ListingPassport() {
-  const visaPackages = [
-    {
-      title: "New Passport Application",
-      processingTime: "Up to 10 days",
-      validity: "10 years",
-      entry: "Multiple",
-      fees: "3,499",
-      isPopular: true,
-    },
-    {
-      title: "Tatkal Passport (Express)",
-      processingTime: "Up to 48 hours",
-      validity: "10 years",
-      entry: "Multiple",
-      fees: "7,999",
-      isPopular: true,
-    },
-    {
-      title: "Passport Renewal",
-      processingTime: "Up to 7 days",
-      validity: "10 years",
-      entry: "Multiple",
-      fees: "3,999",
-      isPopular: false,
-    },
-    {
-      title: "Lost/Damaged Passport Replacement",
-      processingTime: "Up to 14 days",
-      validity: "10 years",
-      entry: "Multiple",
-      fees: "5,999",
-      isPopular: false,
-    },
-    {
-      title: "Child Passport (Below 18 Years)",
-      processingTime: "Up to 10 days",
-      validity: "5 years",
-      entry: "Multiple",
-      fees: "2,499",
-      isPopular: false,
-    },
-    {
-      title: "Family Passport Package",
-      processingTime: "Up to 10 days",
-      validity: "10 years",
-      entry: "Multiple",
-      fees: "14,999",
-      isPopular: true,
-      includesNote: "(Includes 2 Adults + 1 Child)",
-    },
-  ]
+
+    const [visaPackages, setVisaPackages] = useState([]);
+  
+    useEffect(() => {
+      const fetchVisaPackages = async () => {
+        try { 
+          const response = await ApiGet("/admin/passport-inquiries");
+          console.log('response', response)
+          setVisaPackages(response.room);
+        } catch (error) {
+          console.error("Error fetching visa packages:", error);
+        }
+      };
+  
+      fetchVisaPackages();
+    }, []);
+  // const visaPackages = [
+  //   {
+  //     title: "New Passport Application",
+  //     processingTime: "Up to 10 days",
+  //     validity: "10 years",
+  //     entry: "Multiple",
+  //     fees: "3,499",
+  //     isPopular: true,
+  //   },
+  //   {
+  //     title: "Tatkal Passport (Express)",
+  //     processingTime: "Up to 48 hours",
+  //     validity: "10 years",
+  //     entry: "Multiple",
+  //     fees: "7,999",
+  //     isPopular: true,
+  //   },
+  //   {
+  //     title: "Passport Renewal",
+  //     processingTime: "Up to 7 days",
+  //     validity: "10 years",
+  //     entry: "Multiple",
+  //     fees: "3,999",
+  //     isPopular: false,
+  //   },
+  //   {
+  //     title: "Lost/Damaged Passport Replacement",
+  //     processingTime: "Up to 14 days",
+  //     validity: "10 years",
+  //     entry: "Multiple",
+  //     fees: "5,999",
+  //     isPopular: false,
+  //   },
+  //   {
+  //     title: "Child Passport (Below 18 Years)",
+  //     processingTime: "Up to 10 days",
+  //     validity: "5 years",
+  //     entry: "Multiple",
+  //     fees: "2,499",
+  //     isPopular: false,
+  //   },
+  //   {
+  //     title: "Family Passport Package",
+  //     processingTime: "Up to 10 days",
+  //     validity: "10 years",
+  //     entry: "Multiple",
+  //     fees: "14,999",
+  //     isPopular: true,
+  //     includesNote: "(Includes 2 Adults + 1 Child)",
+  //   },
+  // ]
 
 
 
@@ -205,7 +207,7 @@ export default function ListingPassport() {
   )
 }
 
-function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, isPopular, includesNote }) {
+function VisaCard({ title, processingTime, travelerType,  processingType, validity, assistanceType, fees, isPopular, includesNote }) {
   return (
 
     <>
@@ -278,23 +280,23 @@ function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, is
             <div className="space-y-2.5">
               <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Validity:</span>
-                <span className="text-[#1A1A1A] text-sm">{processingTime}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Traveler Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{stayPeriod}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Processing Time:</span>
                 <span className="text-[#1A1A1A] text-sm">{validity}</span>
               </div>
               <div className="flex justify-between">
+                <span className="text-[#666666] text-sm">Traveler Type:</span>
+                <span className="text-[#1A1A1A] text-sm">{travelerType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#666666] text-sm">Processing Time:</span>
+                <span className="text-[#1A1A1A] text-sm">{processingTime}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Processing Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{entry}</span>
+                <span className="text-[#1A1A1A] text-sm">{processingType}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Assistance Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{entry}</span>
+                <span className="text-[#1A1A1A] text-sm">{assistanceType}</span>
               </div>
               <div className="flex justify-between items-center pt-1">
                 <span className="text-[#666666] text-sm">Fees:</span>
@@ -304,9 +306,6 @@ function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, is
           </div>
         </div>
       </div>
-
-
-
     </>
 
 

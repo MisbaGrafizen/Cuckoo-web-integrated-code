@@ -10,6 +10,7 @@ import image11 from "../../../public/Gallery/img1.jpg";
 import image22 from "../../../public/Gallery/img2.jpg";
 import image33 from "../../../public/Gallery/img3.jpg";
 import image44 from "../../../public/Gallery/img4.jpg";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Star,
@@ -28,7 +29,8 @@ import banner1 from "../../../public/Gallery/img3.jpg";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Component/header/Header";
 import RoomHeader from "../../Component/header/roomHeader/RoomHeader";
-import Footer from "../../Component/footer/Footer";
+import { getRoomsAction } from "../../redux/action/landingManagement";
+import { ApiGet } from "../../helper/axios";
 
 // interface RoomProps {
 //   name: string;
@@ -53,9 +55,8 @@ const HotelCard = ({
   ratingText,
   ratings,
   sponsored,
-  originalPrice,
-  discountedPrice,
-  taxes,
+  basePrice,
+  taxesAndFees,
   amenities,
   images,
   features,
@@ -68,6 +69,10 @@ const HotelCard = ({
   const handleDetails = () => {
     navigate("/room-details");
   };
+
+  const amenitiesArray = Object.keys(amenities).filter(
+    (key) => amenities[key]
+  );
 
   return (
     <div className="bg-white w-[100%] rounded-lg border relative flex flex-col  border-[#E5E7EB] overflow-hidden">
@@ -106,11 +111,10 @@ const HotelCard = ({
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`w-[60px] h-[55px] rounded overflow-hidden ${
-                  currentImageIndex === index
-                    ? "border-2 border-white"
-                    : "border border-transparent"
-                }`}
+                className={`w-[60px] h-[55px] rounded overflow-hidden ${currentImageIndex === index
+                  ? "border-2 border-white"
+                  : "border border-transparent"
+                  }`}
               >
                 <img
                   src={img}
@@ -160,31 +164,37 @@ const HotelCard = ({
           </div>
 
           <div className="flex gap-3 flex-wrap mt-2">
-            {amenities.map((amenity, index) => (
-              <div
-                key={index}
-                className="flex items-center  leading-4 text-[#4a4a4a]"
-              >
-                {amenity === "Gym" && (
-                  <Dumbbell className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
-                )}
-                {amenity === "Restaurant" && (
-                  <UtensilsCrossed className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
-                )}
-                {amenity === "24-hour Room Service" && (
-                  <Clock className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
-                )}
-                {amenity === "Swimming Pool" && (
-                  <Bath className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
-                )}
-                <span className="text-[12px] ">{amenity}</span>
-              </div>
-            ))}
+            {Array.isArray(amenitiesArray) ? (
+              amenitiesArray.map((amenity, index) => (
+                <div
+                  key={index}
+                  className="flex items-center leading-4 text-[#4a4a4a]"
+                >
+                  {amenity === "Gym" && (
+                    <Dumbbell className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
+                  )}
+                  {amenity === "Restaurant" && (
+                    <UtensilsCrossed className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
+                  )}
+                  {amenity === "24-hour Room Service" && (
+                    <Clock className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
+                  )}
+                  {/* {amenity === "Swimming Pool" && (
+                    <Bath className="w-[15px] h-[15px] mr-[5px] text-[#005f94]" />
+                  )} */}
+                  <span className="text-[12px]">{amenity}</span>
+                </div>
+              ))
+            ) : (
+              <p>No amenities available</p>
+            )}
+ 
+
           </div>
 
           <div className=" flex relative ">
             <div className=" w-[80%] flex  flex-col gap-[5px] mt-[23px]">
-              {features.map((feature, index) => (
+              {features?.map((feature, index) => (
                 <div key={index} className="flex  gap-2">
                   <i class="fa-duotone fa-solid mt-[2px]  text-[#b18f2a] fa-check"></i>
                   <span className="text-[#b18f2a]  text-[13px]">{feature}</span>
@@ -208,18 +218,18 @@ const HotelCard = ({
 
           <div className="flex   z-[12] mt-[20px] justify-end">
             <div className="text-right w-[100%] ">
-              {originalPrice && (
+              {basePrice && (
                 <div className="text-[#4a4a4a] text-[10px] line-through text-base">
-                  ₹{originalPrice.toLocaleString()}
+                  ₹{basePrice?.toLocaleString()}
                 </div>
               )}
               <div className="flex items-baseline gap-2 justify-end">
                 <span className="text-[22px] font-[600]  text-black">
-                  ₹{discountedPrice.toLocaleString()}
+                  ₹{basePrice?.toLocaleString()}
                 </span>
               </div>
               <div className="text-sm text-[400] text -[12] text-[#4a4a4a]  ">
-                + ₹{taxes.toLocaleString()} taxes & fees
+                + ₹{taxesAndFees?.toLocaleString()} taxes & fees
               </div>
               <div className=" flex justify-end  absolute bottom-[10px] right-4">
                 <div
@@ -247,8 +257,28 @@ export default function RoomListing() {
   const [startDate, setStartDate] = useState(dayjs());
   const [numOfDays, setNumOfDays] = useState(null);
   const [endDate, setEndDate] = useState(dayjs());
+  const [hotels, setHotels] = useState([]);
 
-  const formatPlaceholder = (dates) => {};
+  const dispatch = useDispatch();
+
+  const rooms = useSelector((state) => state.landing.getAllRooms);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const response = await ApiGet("/admin/rooms");
+        setHotels(response.room);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
+
+  console.log('rooms', rooms)
+
+  const formatPlaceholder = (dates) => { };
   const handleGuestDetails = () => {
     setGuestDetails((prevCheck) => !prevCheck);
   };
@@ -270,81 +300,81 @@ export default function RoomListing() {
   // const disabledDate = (current) => {
   //   return current && current.isBefore(dayjs(), "day");
   // };
-  const hotels = [
-    {
-      name: "Moxy Mumbai Andheri West By Marriott",
-      location: "Andheri West",
-      distance: "1.8 km drive to Kokilaben Dhirubhai Ambani Hospital",
-      rating: 4.7,
-      ratingText: "Excellent",
-      ratings: 29,
-      sponsored: true,
-      originalPrice: null,
-      discountedPrice: 19777,
-      taxes: 3560,
-      amenities: ["Gym", "Restaurant", "24-hour Room Service"],
-      images: [image1, image2, image3, image4],
-      features: ["Free Cancellation", "Breakfast Included"],
-      description: null,
-      noCostEmi: false,
-    },
-    {
-      name: "The Lalit Mumbai",
-      location: "Near Mumbai Airport",
-      distance: "1.3 km  - Chhatrapati Shivaji International Airport",
-      rating: 4.1,
-      ratingText: "Very Good",
-      ratings: 8074,
-      sponsored: false,
-      originalPrice: 26018,
-      discountedPrice: 19563,
-      taxes: 5971,
-      amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
-      images: [image1, image2, image3, image4],
-      features: ["Free Cancellation till 24 hrs before check in"],
-      description:
-        "Grand, picturesque lobby, delicious food, well-equipped gym and pool near the airport",
-      noCostEmi: true,
-    },
-    {
-      name: "Lemon Tree Premier, Mumbai International Airport",
-      location: "Near Mumbai Airport",
-      distance: "3 minutes walk to Marol Naka Metro Station",
-      rating: 4.2,
-      ratingText: "Very Good",
-      ratings: 21,
-      sponsored: false,
-      originalPrice: 29559,
-      discountedPrice: 11295,
-      taxes: 5601,
-      amenities: ["Spa", "Swimming Pool", "Gym"],
-      images: [image11, image22, image33, image44],
-      features: ["Free Cancellation"],
-      description:
-        "Conveniently located near Mumbai airport, easy access to metro and nearby ",
-      noCostEmi: false,
-    },
-    {
-      name: "The Lalit Mumbai",
-      location: "Near Mumbai Airport",
-      distance: "1.3 km  - Chhatrapati Shivaji International Airport",
-      rating: 4.1,
-      ratingText: "Very Good",
-      ratings: 74,
-      sponsored: false,
-      originalPrice: 26018,
-      discountedPrice: 19563,
-      taxes: 5971,
-      amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
-      images: [image1, image2, image3, image4],
-      features: ["Free Cancellation till 24 hrs before check in"],
-      description:
-        "Grand, picturesque lobby, delicious food, well-equipped gym and pool near the airport",
-      noCostEmi: true,
-    },
-  ];
+  // const hotels = [
+  //   {
+  //     name: "Moxy Mumbai Andheri West By Marriott",
+  //     location: "Andheri West",
+  //     distance: "1.8 km drive to Kokilaben Dhirubhai Ambani Hospital",
+  //     rating: 4.7,
+  //     ratingText: "Excellent",
+  //     ratings: 29,
+  //     sponsored: true,
+  //     originalPrice: null,
+  //     discountedPrice: 19777,
+  //     taxes: 3560,
+  //     amenities: ["Gym", "Restaurant", "24-hour Room Service"],
+  //     images: [image1, image2, image3, image4],
+  //     features: ["Free Cancellation", "Breakfast Included"],
+  //     description: null,
+  //     noCostEmi: false,
+  //   },
+  //   {
+  //     name: "The Lalit Mumbai",
+  //     location: "Near Mumbai Airport",
+  //     distance: "1.3 km  - Chhatrapati Shivaji International Airport",
+  //     rating: 4.1,
+  //     ratingText: "Very Good",
+  //     ratings: 8074,
+  //     sponsored: false,
+  //     originalPrice: 26018,
+  //     discountedPrice: 19563,
+  //     taxes: 5971,
+  //     amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
+  //     images: [image1, image2, image3, image4],
+  //     features: ["Free Cancellation till 24 hrs before check in"],
+  //     description:
+  //       "Grand, picturesque lobby, delicious food, well-equipped gym and pool near the airport",
+  //     noCostEmi: true,
+  //   },
+  //   {
+  //     name: "Lemon Tree Premier, Mumbai International Airport",
+  //     location: "Near Mumbai Airport",
+  //     distance: "3 minutes walk to Marol Naka Metro Station",
+  //     rating: 4.2,
+  //     ratingText: "Very Good",
+  //     ratings: 21,
+  //     sponsored: false,
+  //     originalPrice: 29559,
+  //     discountedPrice: 11295,
+  //     taxes: 5601,
+  //     amenities: ["Spa", "Swimming Pool", "Gym"],
+  //     images: [image11, image22, image33, image44],
+  //     features: ["Free Cancellation"],
+  //     description:
+  //       "Conveniently located near Mumbai airport, easy access to metro and nearby ",
+  //     noCostEmi: false,
+  //   },
+  //   {
+  //     name: "The Lalit Mumbai",
+  //     location: "Near Mumbai Airport",
+  //     distance: "1.3 km  - Chhatrapati Shivaji International Airport",
+  //     rating: 4.1,
+  //     ratingText: "Very Good",
+  //     ratings: 74,
+  //     sponsored: false,
+  //     originalPrice: 26018,
+  //     discountedPrice: 19563,
+  //     taxes: 5971,
+  //     amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
+  //     images: [image1, image2, image3, image4],
+  //     features: ["Free Cancellation till 24 hrs before check in"],
+  //     description:
+  //       "Grand, picturesque lobby, delicious food, well-equipped gym and pool near the airport",
+  //     noCostEmi: true,
+  //   },
+  // ];
 
-  const [priceRange, setPriceRange] = useState(18219);
+  const [priceRange, setPriceRange] = useState(20000);
   const [amenities, setAmenities] = useState([]);
   const [isRatingOpen, setIsRatingOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
@@ -368,9 +398,25 @@ export default function RoomListing() {
     );
   };
 
+  const filteredHotels = hotels.filter((hotel) => {
+    const hotelAmenities = Object.keys(hotel.amenities).filter(
+      (key) => hotel.amenities[key]
+    );
+    const hasSelectedAmenities = amenities.every((amenity) =>
+      hotelAmenities.includes(amenity.toLowerCase())
+    );
+
+    const isWithinPriceRange = hotel.basePrice <= priceRange;
+
+    const meetsRatingCriteria = selectedRating === 0 || hotel.rating >= selectedRating;
+
+    return hasSelectedAmenities && isWithinPriceRange && meetsRatingCriteria;
+  });
+
+
   return (
     <>
-{/* <RoomHeader /> */}
+      <RoomHeader />
 
       <div className="flex flex-col w-full font-Poppins pt-[150px] min-h-screen">
         {/* <div className="hero-background"></div> */}
@@ -404,12 +450,12 @@ export default function RoomListing() {
                     <div className="relative h-2 bg-gray-200 rounded-full">
                       <div
                         className="absolute h-full bg-blue-500 rounded-full"
-                        style={{ width: `${(priceRange / 18219) * 100}%` }}
+                        style={{ width: `${(priceRange / 20000) * 100}%` }}
                       />
                       <input
                         type="range"
                         min="0"
-                        max="18219"
+                        max="20000"
                         value={priceRange}
                         onChange={(e) => setPriceRange(Number(e.target.value))}
                         className="absolute w-full h-full opacity-0 cursor-pointer"
@@ -459,11 +505,10 @@ export default function RoomListing() {
                           <div
                             className={`
                       w-4 h-4 border-1 rounded transition-colors duration-200
-                      ${
-                        amenities.includes(amenity)
-                          ? "border-blue-500 bg-blue-500"
-                          : "border-gray-300 group-hover:border-blue-500"
-                      }
+                      ${amenities.includes(amenity)
+                                ? "border-blue-500 bg-blue-500"
+                                : "border-gray-300 group-hover:border-blue-500"
+                              }
                     `}
                           >
                             {amenities.includes(amenity) && (
@@ -528,11 +573,10 @@ export default function RoomListing() {
                           <div
                             className={`
                       w-5 h-5 border-2 rounded-full transition-colors duration-200
-                      ${
-                        selectedRating === rating
-                          ? "border-blue-500"
-                          : "border-gray-300 group-hover:border-blue-500"
-                      }
+                      ${selectedRating === rating
+                                ? "border-blue-500"
+                                : "border-gray-300 group-hover:border-blue-500"
+                              }
                     `}
                           >
                             {selectedRating === rating && (
@@ -567,12 +611,8 @@ export default function RoomListing() {
               <HotelCard key={index} {...hotel} />
             ))}
           </div>
-
-          
         </div>
       </div>
-
-      <Footer/>
     </>
   );
 }

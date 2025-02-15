@@ -57,10 +57,7 @@ export default function Blog() {
     <div className="w-[75%] flex mx-auto">
       <div className="w-full flex flex-col md:gap-[20px]">
         <div className="flex w-full gap-[30px] md:mt-[0px] flex-col justify-between">
-          <h2 className="text-3xl font-bold text-[#005c95] mb-5">Cuckoo Travel Blog</h2>
-          <p className="text-[#646464] text-md mb-8">
-            Stay updated with travel tips, visa guides, and trending destinations!
-          </p>
+         
           <div className="w-full flex flex-row gap-[20px] overflow-x-auto flex-shrink-0 py-2">
             {blogPosts.map((post) => (
               <div

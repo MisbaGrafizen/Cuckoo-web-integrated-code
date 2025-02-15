@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../Component/header/Header'
 import image1 from "../../../public/staffhand/image1.webp";
 import image2 from "../../../public/staffhand/image2.webp";
@@ -10,9 +10,50 @@ import {
     ModalContent,
 } from "@nextui-org/react";
 import Inquariy from '../../Component/modal/Inquariy';
+import { ApiGet } from '../../helper/axios';
 
 export default function Country() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [categories, setCategories] = useState([]);
+    const [packages, setPackages] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+  
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try { 
+          const response = await ApiGet("/admin/categories");
+          console.log('response', response)
+          setCategories(response.category);
+          if (response.category?.length) {
+            setSelectedCategory(response.category[0]._id);
+        }
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+    }
+      };
+  
+      fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        if (!selectedCategory) return;
+
+        const fetchPackages = async () => {
+            try {
+                const response = await ApiGet(`/admin/packages?category=${selectedCategory}`);
+                console.log('Packages Response:', response);
+                setPackages(response.packages || []);
+            } catch (error) {
+                console.error("Error fetching packages:", error);
+            }
+        };
+
+        fetchPackages();
+    }, [selectedCategory]);
+
+
     const domesticPackages = [
         { id: 1, image: image1, name: "Kashmir", price: "9,999" },
         { id: 2, image: image2, name: "Manali", price: "8,999" },
@@ -34,7 +75,7 @@ export default function Country() {
 
         <>
 
-            <div className=" 2xl:w-[1400px]  font-Poppins !bg-[#] w-[75%]  pt-[160px] pb-[40px] flex flex-col gap-[30px] h-[100%] mx-auto">
+            <div className=" 2xl:w-[1200px]  font-Poppins !bg-[#] w-[75%]  pt-[160px] pb-[40px] flex flex-col gap-[30px] h-[100%] mx-auto">
                 <div className="flex flex-col relative gap-[0px]">
                     <h1 className="flex md:flex-row flex-col font-[700]  gap-[5px] text-[30px] md:text-[35px]">
                         <span className="pr-[10px] flex text-[#005f94]">Dubai</span>
@@ -138,12 +179,12 @@ export default function Country() {
                 </div>
 
                 <div className=' flex   ove(rflow-x-auto w-[100%] gap-[10px]'>
-                    {packgesButton.map((btn) => (
+                    {categories.map((btn) => (
                         <button
                             key={btn.id}
-                            className={`w-fit h-fit py-[10px] px-[12px] rounded-tl-[11px] rounded-br-[11px] text-[15px] flex ${selectedPackage.id === btn.id ? 'bg-[#005f94] border border-[#005f94] text-white' : 'border border-[#005f94] bg-white text-[#005f94]'}`}
-                            onClick={() => setSelectedPackage(domesticPackages[btn.id - 1])}>
-                            {btn.text}
+                            className={`w-fit h-fit py-[10px] px-[12px] rounded-tl-[11px] rounded-br-[11px] text-[15px] flex ${selectedPackage?.id === btn?.id ? 'bg-[#005f94] border border-[#005f94] text-white' : 'border border-[#005f94] bg-white text-[#005f94]'}`}
+                            onClick={() => setSelectedPackage(domesticPackages[btn?.id - 1])}>
+                            {btn.packageName}
                         </button>
                     ))}
                 </div>

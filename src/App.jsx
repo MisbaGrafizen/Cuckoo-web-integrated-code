@@ -38,7 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={loading ? <Loader /> : <Home />} /> 
           <Route path="/visa" element={loading ? <Loader /> : <VisaPage />} /> 
-          <Route path="/holiday-packges" element={loading ? <Loader /> : <HoliDaysPackges />} /> 
+          <Route path="/holiday-packages" element={loading ? <Loader /> : <HoliDaysPackges />} /> 
 
           <Route path="/rooms" element={loading ? <Loader /> : <RoomListing />} /> 
 

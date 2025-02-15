@@ -7,10 +7,11 @@ import { BrowserRouter } from 'react-router-dom'
 import { NextUIProvider } from '@nextui-org/react';
 
 import { SnackbarProvider } from 'notistack'
-
+import { Provider } from 'react-redux';
+import store from "./redux/store.js";
 
 createRoot(document.getElementById('root')).render(
-
+<Provider store={store}>
     <StrictMode>
       <NextUIProvider>
         <BrowserRouter>
@@ -20,6 +21,6 @@ createRoot(document.getElementById('root')).render(
         </BrowserRouter>
       </NextUIProvider>
     </StrictMode>
-
+    </Provider>
 
 );
