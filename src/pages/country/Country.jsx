@@ -42,7 +42,7 @@ export default function Country() {
 
         const fetchPackages = async () => {
             try {
-                const response = await ApiGet(`/admin/packages?category=${selectedCategory}`);
+                const response = await ApiGet(`/admin/packages/${selectedCategory}`);
                 console.log('Packages Response:', response);
                 setPackages(response.packages || []);
             } catch (error) {
@@ -181,9 +181,9 @@ export default function Country() {
                 <div className=' flex   ove(rflow-x-auto w-[100%] gap-[10px]'>
                     {categories.map((btn) => (
                         <button
-                            key={btn.id}
-                            className={`w-fit h-fit py-[10px] px-[12px] rounded-tl-[11px] rounded-br-[11px] text-[15px] flex ${selectedPackage?.id === btn?.id ? 'bg-[#005f94] border border-[#005f94] text-white' : 'border border-[#005f94] bg-white text-[#005f94]'}`}
-                            onClick={() => setSelectedPackage(domesticPackages[btn?.id - 1])}>
+                            key={btn._id}
+                            className={`w-fit h-fit py-[10px] px-[12px] rounded-tl-[11px] rounded-br-[11px] text-[15px] flex ${selectedCategory === btn?._id ? 'bg-[#005f94] border border-[#005f94] text-white' : 'border border-[#005f94] bg-white text-[#005f94]'}`}
+                            onClick={() => setSelectedCategory(btn._id)}>
                             {btn.packageName}
                         </button>
                     ))}
@@ -191,7 +191,7 @@ export default function Country() {
                 <div className=' flex flex-col gap-[40px]'>
 
                     <div className="flex w-[100%] justify-start  overflow-x-auto gap-[15px]  ">
-                        {domesticPackages.map((pkg) => (
+                        {packages.map((pkg) => (
                             <div
                                 key={pkg.id}
                                 className="flex flex-col justify-center items-center relative shrink-0 md:w-[255px] sm:w-[300px] w-[300px] md:h-[400px] max-h-[480px] bg-white rounded-[8px] shadow-md overflow-hidden"
@@ -199,19 +199,19 @@ export default function Country() {
                                 <img
                                     className="object-cover shadow-md md:w-[340px] w-[600px] h-[480px] rounded-[10px]"
                                     src={pkg.image}
-                                    alt={pkg.name}
+                                    alt={pkg.packageName}
                                 />
                                 <div className=" absolute   w-[93%]  bottom-0  mx-auto   ">
                                     <div className=" flex flex-col md:text-[13px] text-[#fff] text-[15px] px-[4px] gap-[px]">
-                                        <p>5 days & 4 nights</p>
+                                        <p>{pkg.duration}</p>
                                         <p className="  text-[13px]  md:text-[10px]  text-jus flex">
-                                            Dubai Highlights | Skyline and Sandscapes
+                                            {pkg.packageName}
                                         </p>
                                     </div>
                                     <div className="flex h-[140px] md:h-[115px]  shadow-md flex-col px-[15px] py-[10px] bgStaff  ] rounded-t-[10px]">
 
                                         <p className=" flex font-[500] md:text-[12px] text-[14px] text-[#fff]">
-                                            5D Dubai
+                                            {pkg.description}
                                         </p>
 
 
@@ -236,7 +236,7 @@ export default function Country() {
                     </div>
 
 
-                    <div className="flex w-[100%] justify-start overflow-x-auto gap-[20px]  ">
+                    {/* <div className="flex w-[100%] justify-start overflow-x-auto gap-[20px]  ">
                         {domesticPackages.map((pkg) => (
                             <div
                                 key={pkg.id}
@@ -261,7 +261,6 @@ export default function Country() {
                                         </p>
 
 
-                                        {/* <span className="w-[180px] h-[2px] bg-[#c2c2c2]"></span> */}
                                         <div className=' w-[180px] my-[3px] h-[1.2px] bg-[#d7d6d6]'>
 
                                         </div>
@@ -279,7 +278,7 @@ export default function Country() {
                                 </div>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
 
 

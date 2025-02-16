@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import mainimg from "../../../public/VisaImage/visa2.jpeg";
 import { useNavigate } from "react-router-dom";
+import { ApiGet } from "../../helper/axios";
 
 export default function Blog() {
   const navigate = useNavigate();
+  
+     const [blogs, setBlogs] = useState([]);  
+    
+      useEffect(() => {
+        const fetchBlogs = async () => {
+          try { 
+            const response = await ApiGet("/admin/blogs");
+            console.log('response', response)
+            setBlogs(response.blogs);
+          } catch (error) {
+            console.error("Error fetching visa packages:", error);
+          }
+        };
+        fetchBlogs();
+      }, []);
+  
 
   const blogPosts = [
     {
@@ -59,7 +76,7 @@ export default function Blog() {
         <div className="flex w-full gap-[30px] md:mt-[0px] flex-col justify-between">
          
           <div className="w-full flex flex-row gap-[20px] overflow-x-auto flex-shrink-0 py-2">
-            {blogPosts.map((post) => (
+            {blogs.map((post) => (
               <div
                 key={post.id}
                 className="md:w-[250px] mb-[20px] h-[410px] w-[300px] mx-auto md:mx-0 relative gap-[px] shadow-lg overflow-hidden rounded-[20px] border flex flex-col cursor-pointer flex-shrink-0"

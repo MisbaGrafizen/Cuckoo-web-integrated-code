@@ -14,6 +14,7 @@ import Passport from "./pages/passport/Passport";
 import Header from "./Component/header/Header";
 import ContactUs from "./pages/contactUs/ContactUs";
 import AllHolidayPackage from "./pages/holiDayPackges/AllHolidayPackage";
+import BlogDetails from "./pages/blogdetail/BlogDetails";
 
 
 
@@ -41,7 +42,7 @@ function App() {
           <Route path="/holiday-packages" element={loading ? <Loader /> : <HoliDaysPackges />} /> 
 
           <Route path="/rooms" element={loading ? <Loader /> : <RoomListing />} /> 
-
+          <Route path="/blog-details" element={loading ? <Loader /> : <BlogDetails />} /> 
           <Route path="/country" element={loading ? <Loader /> : <Country />} /> 
           <Route path="/passport" element={loading ? <Loader /> : <Passport />} /> 
           <Route path="/contact-us" element={loading ? <Loader /> : <ContactUs />} /> 

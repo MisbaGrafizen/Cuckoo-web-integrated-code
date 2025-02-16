@@ -7,8 +7,19 @@ import {
 import logo from "../../../public/Header/logo.png"
 import image from "../../../public/heroSection/image1.jpg"
 import { DatePicker } from 'antd';
+import { ApiPost } from '../../helper/axios';
 
 export default function Inquariy({ isOpen, closeAndResetModal }) {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        date: "",
+        count: "",
+        message: ""
+    });
+
     const [nameFocused, setNameFocused] = useState(false); 
     const [emailFocused, setEmailFocused] = useState(false); 
     const [numberFocused, setNumberFocused] = useState(false);
@@ -17,16 +28,43 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
     };
+
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleDateChange = (date, dateString) => {
+        setFormData({ ...formData, date: dateString });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await ApiPost("/admin/inquiry", formData);
+            console.log('response', response)
+            alert("Inquiry Submitted Successfully!");
+            closeAndResetModal(); 
+        } catch (error) {
+            console.error("❌ Error submitting inquiry:", error);
+            alert("Failed to submit inquiry.");
+        }
+    };
+
+
     return (
         <NextUIModal
             isOpen={isOpen}
-            onOpenChange={closeAndResetModal}
+            // onOpenChange={closeAndResetModal}
             className="max-w-[475px]  bg-transparent  h-[100%] !m-0 shadow-none "
         >
             <ModalContent className=' h-fit '>
-                <ModalBody className=" w-[100%] font-Poppins !min-h-[590px] mt-[39px] !p-0 rounded-tr-[5px] bg-white   rounded-tl-[35px]  rounded-br-[35px]  mx-auto">
+                <ModalBody className=" w-[97%] font-Poppins !min-h-[590px] mt-[39px] !p-0 rounded-tr-[5px] bg-white   rounded-tl-[35px]  rounded-br-[35px]  mx-auto">
                     <div className=' absolute w-fit mx-auto left-0 top-[0px]  right-[0px]'>
                         <img className=' flex  w-[150px] mx-auto object-cover ha ' src={logo} />
+                    </div>
+                    <div className=' flex cursor-pointer w-fit absolute top-[26px]  right-[0px] bg-white rounded-[100%] h-fit  ' onClick={closeAndResetModal}>
+                    <i class="fa-solid text-[30px] fa-circle-xmark text-[#f52828]"></i>
                     </div>
                     <div className=' flex flex-col w-[100%] mt-[25px] gap-[20px]   py-[20px] px-[25px]'>
                         <div className='  items-center gap-[14px] flex '>
@@ -58,10 +96,10 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                 </label>
                                 <input
                                     type="text  "
-                                    name="maxWeight"
+                                    name="name"
                                     id="name"
-
-
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     onFocus={() => setNameFocused(true)}
                                     onBlur={(e) =>
                                         setNameFocused(e.target.value !== "")
@@ -82,10 +120,10 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                 </label>
                                 <input
                                     type="text  "
-                                    name="maxWeight"
+                                    name="email"
                                     id="name"
-
-
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     onFocus={() => setEmailFocused(true)}
                                     onBlur={(e) =>
                                         setEmailFocused(e.target.value !== "")
@@ -113,9 +151,10 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                     </label>
                                     <input
                                         type="text  "
-                                        name="maxWeight"
+                                        name="phoneNumber"
                                         id="name"
-
+                                        value={formData.phoneNumber}
+                                        onChange={handleChange}
 
                                         onFocus={() => setNumberFocused(true)}
                                         onBlur={(e) =>
@@ -136,7 +175,6 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                             : "text-[#8f8f8f] flex cursor-text"
                                             }`}
                                     >
-                        
                                     </label>
                                     <DatePicker className=' flex w-[100%] py-[11px]' onChange={onChange} />
                                 </div>
@@ -152,10 +190,10 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                     </label>
                                     <input
                                         type="text  "
-                                        name="maxWeight"
+                                        name="count"
                                         id="name"
-
-
+                                        value={formData.count}
+                                        onChange={handleChange}
                                         onFocus={() => setPersonFocused(true)}
                                         onBlur={(e) =>
                                             setPersonFocused(e.target.value !== "")
@@ -178,10 +216,10 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                             </label>
                             <textarea
                             type="text  "
-                         
+                            name="message"
                             id="name"
-
-
+                            value={formData.message}
+                            onChange={handleChange}
                             onFocus={() => setMessageFocused(true)}
                             onBlur={(e) =>
                                 setMessageFocused(e.target.value !== "")
@@ -192,6 +230,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                         </div>
               <button
                             className={`w-[100%] h-fit py-[13px] px-[12px] rounded-tl-[11px] flex justify-center items-center rounded-br-[11px] text-[18px] flex bg-[#005f94] border border-[#005f94] text-white`}
+                            onClick={handleSubmit}
                       >
                            Connect with an Experts
 
