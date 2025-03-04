@@ -138,9 +138,23 @@
   display: none !important;
 }
 
+.animationSearch{
 
+transform: translateY(-620px);
+animation-name: search ;
+animation-duration: 0.4s;
+animation-fill-mode: forwards;
+}
 
+@keyframes search {
+0%{
+  transform: translateY(-620px);
+}
+100%{
+  transform: translateY(0px);
+}
 
+}
 
 
 
@@ -1827,4 +1841,26 @@ background-color: #175a2d;
 }
 .jodit .jodit-workplace .jodit-wysiwyg, .jodit .jodit-workplace .jodit-wysiwyg_iframe, .jodit-container .jodit-workplace .jodit-wysiwyg, .jodit-container .jodit-workplace .jodit-wysiwyg_iframe {
   min-height: 150px !important;
+}
+
+
+
+/* Scrolling content */
+.scroll-content {
+  display: flex;
+  gap: 70px; /* Space between logos */
+  animation: scroll 400s linear infinite;
+}
+
+/* Logos */
+
+
+/* Keyframes for infinite scroll */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

@@ -1,92 +1,194 @@
 import React, { useEffect, useState } from "react";
-import mainimg from "../../../public/VisaImage/visa2.jpeg";
 import { useNavigate } from "react-router-dom";
 import { ApiGet } from "../../helper/axios";
 
 export default function Blog() {
   const navigate = useNavigate();
   
-     const [blogs, setBlogs] = useState([]);  
-    
-      useEffect(() => {
-        const fetchBlogs = async () => {
-          try { 
-            const response = await ApiGet("/admin/blogs");
-            console.log('response', response)
-            setBlogs(response.blogs);
-          } catch (error) {
-            console.error("Error fetching visa packages:", error);
-          }
-        };
-        fetchBlogs();
-      }, []);
-  
+  const [blogs, setBlogs] = useState([]);  
+ 
+   useEffect(() => {
+     const fetchBlogs = async () => {
+       try { 
+         const response = await ApiGet("/admin/blogs");
+         console.log('response', response)
+         setBlogs(response.blogs);
+       } catch (error) {
+         console.error("Error fetching visa packages:", error);
+       }
+     };
+     fetchBlogs();
+   }, []);
 
-  const blogPosts = [
-    {
-      id: 1,
-      image: mainimg,
-      title: "Top 5 Visa-Free Destinations for 2024",
-      description:
-        "Explore stunning visa-free destinations like Maldives, Thailand, and Seychelles with ease. Cuckoo Travel ensures smooth journeys without visa hassles.",
-      date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
-      link: "/blog/visa-free-destinations",
-    },
-    {
-      id: 2,
-      image: mainimg,
-      title: "Dubai Travel Guide: Everything You Need to Know",
-      description:
-        "From the towering Burj Khalifa to the desert safaris, Dubai is a must-visit. Get insider tips from Cuckoo Travel for an unforgettable trip.",
-      date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
-      link: "/blog/dubai-travel-guide",
-    },
-    {
-      id: 3,
-      image: mainimg,
-      title: "How to Get a Schengen Visa in 2024",
-      description:
-        "Planning a European adventure? Learn the step-by-step process to apply for a Schengen Visa and explore countries like France, Italy, and Germany.",
-      date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
-      link: "/blog/schengen-visa-guide",
-    },
-    {
-      id: 4,
-      image: mainimg,
-      title: "Thailand: The Ultimate Budget Travel Destination",
-      description:
-        "Affordable stays, street food, and tropical beaches – Thailand is a paradise for budget travelers. Discover must-visit spots with Cuckoo Travel.",
-      date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
-      link: "/blog/thailand-budget-travel",
-    },
-    {
-      id: 5,
-      image: mainimg,
-      title: "USA Visa Tips: How to Secure Your Tourist Visa",
-      description:
-        "Dreaming of visiting New York, LA, or Miami? Learn about the US visa process and make your travel dream a reality with Cuckoo Travel’s expert tips.",
-      date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
-      link: "/blog/usa-visa-tips",
-    },
-  ];
+  // const blogPosts = [
+  //   {
+  //     id: 1,
+  //     image: mainimg,
+  //     title: "Top 5 Visa-Free Destinations for 2024",
+  //     description:
+  //       "Explore stunning visa-free destinations like Maldives, Thailand, and Seychelles with ease. Cuckoo Travel ensures smooth journeys without visa hassles.",
+  //     date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
+  //     link: "/blog-details",
+  //   },
+  //   {
+  //     id: 2,
+  //     image: mainimg1,
+  //     title: "Dubai Travel Guide: Everything You Need to Know",
+  //     description:
+  //       "From the towering Burj Khalifa to the desert safaris, Dubai is a must-visit. Get insider tips from Cuckoo Travel for an unforgettable trip.",
+  //     date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
+  //     link: "/blog-details",
+  //   },
+  //   {
+  //     id: 3,
+  //     image: mainimg2,
+  //     title: "How to Get a Schengen Visa in 2024",
+  //     description:
+  //       "Planning a European adventure? Learn the step-by-step process to apply for a Schengen Visa and explore countries like France, Italy, and Germany.",
+  //     date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
+  //     link: "/blog-details",
+  //   },
+  //   {
+  //     id: 4,
+  //     image: mainimg3,
+  //     title: "Thailand: The Ultimate Budget Travel Destination",
+  //     description:
+  //       "Affordable stays, street food, and tropical beaches – Thailand is a paradise for budget travelers. Discover must-visit spots with Cuckoo Travel.",
+  //     date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
+  //     link: "/blog-details",
+  //   },
+  //   // {
+  //   //   id: 5,
+  //   //   image: mainimg1,
+  //   //   title: "Dubai Travel Guide: Everything You Need to Know",
+  //   //   description:
+  //   //     "From the towering Burj Khalifa to the desert safaris, Dubai is a must-visit. Get insider tips from Cuckoo Travel for an unforgettable trip.",
+  //   //   date: new Date().toLocaleDateString("en-US", { day: "2-digit", month: "long" }),
+  //   //   link: "/blog/dubai-travel-guide",
+  //   // },
+
+  // ];
 
   return (
-    <div className="w-[75%] flex mx-auto">
+    <div className="md:w-[75%] flex-col font-Poppins  relative gap-[30px] w-[90%] flex mx-auto   2xl:w-[1370px]">
+
+<h1 className="flex font-[700] gap-[10px] w-fit  relative  text-[35px]">
+Latest
+            <span className="pr-[10px] flex text-[#005f94]"> Blogs </span>
+            <div className=" absolute  md:right-[130px]  right-[20px]   top-[35px]">
+              <div className="relative  max-w-[100px] w-full md:max-w-[140px]">
+                <svg
+                  viewBox="0 0 300 80"
+                  className="w-full"
+                  preserveAspectRatio="none"
+                >
+                  <defs>
+                    <filter
+                      id="sketch"
+                      x="-10%"
+                      y="-10%"
+                      width="120%"
+                      height="120%"
+                    >
+                      <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.02"
+                        numOctaves="4"
+                        seed="5"
+                        result="noise"
+                      />
+                      <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="noise"
+                        scale="2"
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                      />
+                    </filter>
+                    <linearGradient
+                      id="yellowVariation"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop offset="0%" stopColor="#FCD34D" />
+                      <stop offset="50%" stopColor="#F59E0B" />
+                      <stop offset="100%" stopColor="#FCD34D" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Main sketchy lines */}
+                  <g style={{ filter: "url(#sketch)" }}>
+                    {/* First sketch layer */}
+                    <path
+                      d="M10,30 Q80,25 150,30 T290,30 
+               M15,35 Q85,30 155,35 T285,35"
+                      stroke="#FCD34D"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Second sketch layer with slight offset */}
+                    <path
+                      d="M12,32 Q82,27 152,32 T292,32
+               M17,37 Q87,32 157,37 T287,37"
+                      stroke="#F59E0B"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+
+                    {/* Quick sketch details */}
+                    <path
+                      d="M30,31 l5,-2 l10,4 l-5,-4
+               M160,33 l8,-3 l6,3 l-4,-3
+               M250,32 l6,-2 l8,4 l-7,-4"
+                      stroke="#FBBF24"
+                      strokeWidth="1"
+                      fill="none"
+                    />
+
+                    {/* Additional sketchy details */}
+                    {[...Array(8)].map((_, i) => (
+                      <path
+                        key={i}
+                        d={`M${20 + i * 40},${30 + (i % 2) * 2} l${
+                          5 + (i % 3)
+                        },${-2 + (i % 2)}`}
+                        stroke="#F59E0B"
+                        strokeWidth="1"
+                        fill="none"
+                        opacity="0.6"
+                      />
+                    ))}
+                  </g>
+                </svg>
+              </div>
+            </div>
+          <p className=" md:flex hidden">  & News</p>
+          </h1>
+
+
       <div className="w-full flex flex-col md:gap-[20px]">
+
         <div className="flex w-full gap-[30px] md:mt-[0px] flex-col justify-between">
-         
-          <div className="w-full flex flex-row gap-[20px] overflow-x-auto flex-shrink-0 py-2">
+      
+          <div className="w-full flex flex-row gap-[15px] 2xl:gap-[29px] overflow-x-auto  flex-shrink-0 py-2">
             {blogs.map((post) => (
               <div
                 key={post.id}
-                className="md:w-[250px] mb-[20px] h-[410px] w-[300px] mx-auto md:mx-0 relative gap-[px] shadow-lg overflow-hidden rounded-[20px] border flex flex-col cursor-pointer flex-shrink-0"
+                className="md:w-[250px] 2xl:w-[290px] mb-[20px] 2xl:h-[440px] h-[410px] w-[260px] mx-auto md:mx-0 relative gap-[px] shadow-lg overflow-hidden rounded-[20px] border flex flex-col cursor-pointer flex-shrink-0"
                 onClick={() => navigate(post.link)}
               >
-                <img className="md:h-[200px] object-cover h-[210px]" src={post.image} alt={post.title} />
-                <div className="w-[90px] text-[12px] justify-center font-Poppins absolute items-center flex py-[5px] text-[#fff] bg-[#005c95] rounded-tl-[10px] rounded-br-[10px]">
+                <img className="md:h-[200px] object-cover 2xl:h-[220px] h-[210px]" src={post.image} alt={post.title} />
+                <div className="w-[90px] text-[12px] justify-center font-Poppins absolute items-center flex py-[5px] text-[#fff] bg-[#005f94] rounded-tl-[10px] rounded-br-[10px]">
                   {post.date}
                 </div>
-                <div className="flex w-full pt-[px] px-[10px] flex-col gap-[8px]">
+                <div className="flex w-full pt-[px] px-[10px] flex-col  mt-[10px] gap-[8px]">
                   <div className="font-[600] text-[16px]">
                     <p className="flex font-Poppins font-[600] text-[#005c95] leading-[22px]">
                       {post.title}

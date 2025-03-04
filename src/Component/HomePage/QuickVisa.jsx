@@ -14,7 +14,9 @@ export default function QuickVisa() {
     { id: 2, image: image2, name: "Manali", price: "₹8999" },
     { id: 3, image: image3, name: "Goa", price: "₹7999" },
     { id: 4, image: image2, name: "Manali", price: "₹8999" },
-    { id: 5, image: image2, name: "Manali", price: "₹8999" },
+    { id: 5, image: image1, name: "Manali", price: "₹8999" },
+    { id: 6, image: image2, name: "Manali", price: "₹8999" },
+    { id: 27, image: image3, name: "Manali", price: "₹8999" },
   ];
 
   const visaOn = [
@@ -51,7 +53,7 @@ export default function QuickVisa() {
 
   return (
     <>
-      <div className="flex font-Poppins mx-auto  relative pb-[30px] w-[89%] md:w-[75%]">
+      <div className="flex font-Poppins mx-auto 2xl:w-[1370px]   relative pb-[30px] w-[89%] md:w-[75%]">
         <div className="flex flex-col gap-[20px] md:gap-[30px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex md:flex-row flex-col font-[700] text-[35px]">
@@ -207,12 +209,12 @@ export default function QuickVisa() {
 
 
             </div>
-              {!isScrolledRight && (
-                <div className="absolute right-0 top-0 h-full w-[50px] bg-gradient-to-l from-white to-transparent z-30 pointer-events-none"></div>
-              )}
+              {/* {!isScrolledRight && (
+                <div className="absolute right-0 top-0 h-full w-[50px] bg-gradient-to-l from-white to-transparent z-[8] pointer-events-none"></div>
+              )} */}
 
 
-            <button onClick={scrollRight} className=" flex w-[50px] border-[1.5px]   bottom-[48%] bg-white  justify-center right-[-10px] items-center absolute z-[9] h-[50px] custom-shadow2 rounded-full"  >
+            <button onClick={scrollRight} className=" flex w-[50px] border-[1.5px]   bottom-[48%] bg-white  justify-center right-[-10px] items-center absolute z-[10] h-[50px] custom-shadow2 rounded-full"  >
               <i class="fa-solid fa-chevron-right"></i>
             </button>
 

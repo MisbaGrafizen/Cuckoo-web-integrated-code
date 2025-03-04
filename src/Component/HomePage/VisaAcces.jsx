@@ -1,6 +1,6 @@
-import React from "react";
+import React,{ forwardRef }  from "react";
 
-export default function VisaAcces() {
+const  VisaAcces = forwardRef((props, ref) => {
   const destinations = [
     {
       country: "Dubai",
@@ -42,7 +42,7 @@ export default function VisaAcces() {
 
   return (
     <>
-      <div className="flex font-Poppins mx-auto pb-[30px] w-[89%] md:w-[75%]">
+      <div  ref={ref}  className="flex font-Poppins 2xl:w-[1370px] mx-auto pb-[30px] w-[89%] md:w-[100%]">
         <div className="flex flex-col gap-[30px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex font-[600]  mx-auto text-[25px]">
@@ -84,4 +84,5 @@ export default function VisaAcces() {
       </div>
     </>
   );
-}
+})
+export default VisaAcces;

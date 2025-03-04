@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import image1 from "../../../public/staffhand/image1.webp";
 import image2 from "../../../public/staffhand/image2.webp";
 import image3 from "../../../public/staffhand/image3.webp";
-
 import chair from "../../../public/staffhand/chair.svg";
 import { useNavigate } from "react-router-dom";
 import Inquariy from "../modal/Inquariy";
 
 export default function HandPicked() {
   const [selectedCategory, setSelectedCategory] = useState("Domestic");
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate()
 
 
@@ -19,6 +18,7 @@ export default function HandPicked() {
   const domesticPackages = [
     { id: 1, image: image1, name: "Kashmir", price: "9,999" },
     { id: 2, image: image2, name: "Manali", price: "8,999" },
+    { id: 1, image: image1, name: "Kashmir", price: "9,999" },  
     { id: 3, image: image3, name: "Goa", price: "7,999" },
     // { id: 4, image: image2, name: "Manali", price: "₹8999" },
   ];
@@ -27,15 +27,17 @@ export default function HandPicked() {
     { id: 1, image: image1, name: "Paris", price: "₹49999" },
     { id: 2, image: image2, name: "Dubai", price: "₹39999" },
     { id: 3, image: image3, name: "Maldives", price: "₹29999" },
-    // { id: 4, image: image3, name: "Goa", price: "₹7999" },
+    { id: 4, image: image3, name: "Goa", price: "₹7999" },
   ];
-
+  const handleview = () => {
+    navigate("/related-packages")
+  }
   const packages =
     selectedCategory === "Domestic" ? domesticPackages : internationalPackages;
 
   return (
     <>
-      <div className="flex font-Poppins relative mx-auto w-[89%] md:w-[75%]">
+      <div className="flex font-Poppins relative mx-auto w-[89%] 2xl:w-[1370px] md:w-[75%]">
         <div className="flex flex-col gap-[30px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex md:flex-row flex-col font-[700]  gap-[5px] text-[30px] md:text-[35px]">
@@ -161,16 +163,17 @@ export default function HandPicked() {
               </button>
             </div>
           </div>
-          <div className="flex w-[100%] justify-start overflow-x-auto gap-[20px]  ">
+          {/* <div className="flex w-[100%] justify-start overflow-x-auto gap-[20px]  ">
             {packages.map((pkg) => (
               <div
                 key={pkg.id}
                 className="flex flex-col justify-center items-center relative shrink-0 md:w-[340px] sm:w-[300px] w-[300px] min-h-[480px] bg-white rounded-[10px] shadow-md overflow-hidden"
               >
                 <img
-                  className="object-cover shadow-md md:w-[340px] w-[600px] h-[480px] rounded-[10px]"
+                  className="object-cover cursor-pointer shadow-md md:w-[340px] w-[600px] h-[480px] rounded-[10px]"
                   src={pkg.image}
                   alt={pkg.name}
+                  onClick={handleview}
                 />
                 <div className=" absolute   w-[93%]  bottom-0  mx-auto   ">
                   <div className=" flex flex-col  text-[#fff] text-[15px] px-[4px] gap-[2px]">
@@ -201,6 +204,51 @@ export default function HandPicked() {
                 </div>
               </div>
             ))}
+          </div> */}
+
+          <div className="flex w-[100%] justify-start  overflow-x-auto gap-[15px]  ">
+            {packages.map((pkg) => (
+              <div
+                key={pkg.id}
+                className="flex flex-col justify-center items-center relative shrink-0 md:w-[310px] sm:w-[300px] w-[300px] md:h-[450px] max-h-[480px] bg-white rounded-[8px] shadow-md overflow-hidden cursor-pointer" 
+              >
+                <img
+                  className="object-cover shadow-md md:w-[340px] w-[600px] h-[480px] rounded-[10px]" onClick={handleview}
+                  src={pkg.image}
+                  alt={pkg.name}
+                />
+                <div className=" absolute   w-[93%]  bottom-0  mx-auto   ">
+                  <div className=" flex flex-col md:text-[13px] text-[#fff] text-[15px] px-[4px] gap-[px]" onClick={handleview}>
+                    <p>5 days & 4 nights</p>
+                    <p className="  text-[13px]  md:text-[10px]  text-jus flex">
+                      Dubai Highlights | Skyline and Sandscapes
+                    </p>
+                  </div>
+                  <div className="flex h-[140px] md:h-[115px]  shadow-md flex-col px-[15px] py-[10px] bgStaff  ] rounded-t-[10px]">
+
+                    <p className=" flex font-[500] md:text-[12px] text-[14px] text-[#fff]" onClick={handleview}>
+                      5D Dubai
+                    </p>
+
+
+                    {/* <span className="w-[180px] h-[2px] bg-[#c2c2c2]"></span> */}
+                    <div className=' w-[180px] my-[3px] h-[1.2px] bg-[#d7d6d6]'>
+
+                    </div>
+                    <div className="flex flex-col justify-between w-[100%] md:mt-[0px] mt-[10px]">
+                      <div className="flex items-center gap-[6px]">
+                        <h1 className="flex font-[500] md:text-[14px] text-[20px] text-[#fff] ">
+                          INR {pkg.price}
+                        </h1>
+                      </div>
+                      <button className=" flex w-[100%] justify-center text-[14px] items-center  font-[500] md:mt-[10px] mt-[5px] rounded-[6px] py-[8px] bg-[#fff] " onClick={() => setIsModalOpen(true)}>
+                        Inquiry Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
 
@@ -215,7 +263,7 @@ export default function HandPicked() {
 
 
 
- {isModalOpen && <Inquariy isOpen={isModalOpen} closeAndResetModal={() => setIsModalOpen(false)} />}
+      {isModalOpen && <Inquariy isOpen={isModalOpen} closeAndResetModal={() => setIsModalOpen(false)} />}
 
 
     </>

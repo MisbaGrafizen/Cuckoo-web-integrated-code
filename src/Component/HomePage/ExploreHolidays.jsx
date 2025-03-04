@@ -44,7 +44,7 @@ export default function ExploreHolidays() {
 
   return (
     <>
-      <div className="flex font-Poppins relative  pb-[40px] mx-auto w-[89%] md:w-[75%]">
+      <div className="flex font-Poppins relative 2xl:w-[1370px]  pb-[40px] mx-auto w-[89%] md:w-[75%]">
         <div className="flex flex-col gap-[40px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex flex-col md:flex-row font-[700] text-[30px] md:text-[35px]">
@@ -148,22 +148,22 @@ export default function ExploreHolidays() {
               Find your perfect getaway, tailored to your interests.
             </p>
           </div>
-          <div className="flex w-[50%] overflow-hidden justify-center">
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-4 gap-[30px] w-full  h-fit justify-center">
+          <div className="flex md:w-[67%] 2xl:w-[56%] w-[100%]  justify-center">
+            <div className="md:grid  flex overflow-x-auto lg:grid-cols-5 xl:grid-cols-4 gap-[20px] md:gap-[30px] w-full  h-fit md:justify-center flex-shrink-0">
               {items.map((item, index) => (
                 <div
                   key={item.id}
-                  className="flex flex-col md:w-[150px] md:h-[110px]  rounded-full justify-center items-center"
+                  className="flex flex-col md:w-[150px] w-[140px] bg-[#2b9bf63f] md:h-[150px]   h-[140px] rounded-full justify-center items-center flex-shrink-0"
                 >
                   <img
-                    className="md:w-[55px] object-cover"
+                    className="md:w-[55px] w-[45px] object-cover"
                     src={item.image}
                     alt={item.title}
                   />
-                  <h1 className="font-[500] mt-[5px] md:text-[15px] text-center">
+                  <h1 className="font-[500] mt-[5px] md:text-[15px] text-[13px] text-center">
                     {item.title}
                   </h1>
-                  <p className="md:text-[11px] text-[13px] font-[400] text-[#2196F3] text-center">
+                  <p className="md:text-[11px] text-[11px] font-[400] text-[#2196F3] text-center">
                     {item.description}
                   </p>
                 </div>

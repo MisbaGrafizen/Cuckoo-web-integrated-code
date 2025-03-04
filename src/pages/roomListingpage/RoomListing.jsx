@@ -10,7 +10,15 @@ import image11 from "../../../public/Gallery/img1.jpg";
 import image22 from "../../../public/Gallery/img2.jpg";
 import image33 from "../../../public/Gallery/img3.jpg";
 import image44 from "../../../public/Gallery/img4.jpg";
-import { useDispatch, useSelector } from "react-redux";
+
+import dubaiWhite from "../../../public/visaCountry/Dubai-white.png";
+import dubaiColor from "../../../public/visaCountry/Dubai-color.png"; // Add color images
+import canadaWhite from "../../../public/visaCountry/Canada-white.png";
+import canadaColor from "../../../public/visaCountry/Canada-color.png";
+import parisWhite from "../../../public/visaCountry/Paris-white.png";
+import parisColor from "../../../public/visaCountry/Paris-color.png";
+import usaWhite from "../../../public/visaCountry/usa-white.png";
+import usaColor from "../../../public/visaCountry/usa-color.png";
 
 import {
   Star,
@@ -29,7 +37,9 @@ import banner1 from "../../../public/Gallery/img3.jpg";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Component/header/Header";
 import RoomHeader from "../../Component/header/roomHeader/RoomHeader";
-import { getRoomsAction } from "../../redux/action/landingManagement";
+import Footer from "../../Component/footer/Footer";
+import BookingAlliance from "../../Component/HomePage/BookingAillence";
+import { useSelector } from "react-redux";
 import { ApiGet } from "../../helper/axios";
 
 // interface RoomProps {
@@ -55,30 +65,32 @@ const HotelCard = ({
   ratingText,
   ratings,
   sponsored,
-  basePrice,
-  taxesAndFees,
+  originalPrice,
+  discountedPrice,
+  taxes,
   amenities,
   images,
-  features,
+  features = [],
   description,
   noCostEmi,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
 
-  const handleDetails = () => {
-    navigate("/room-details");
-  };
 
   const amenitiesArray = Object.keys(amenities).filter(
     (key) => amenities[key]
   );
 
+  const handleDetails = () => {
+    navigate("/room-details");
+  };
+
   return (
-    <div className="bg-white w-[100%] rounded-lg border relative flex flex-col  border-[#E5E7EB] overflow-hidden">
-      <div className="flex relative  w-[100%]   md:flex-row">
+    <div className="bg-white  md:w-[750px] 2xl:w-[900px] rounded-lg border relative flex flex-col  2xl:  border-[#005f94] overflow-hidden">
+      <div className="flex relative  flex-col w-[100%]   md:flex-row">
         {/* Left Section - Image Gal lery */}
-        <div className="relative  h-[243px] md:w-[275px]">
+        <div className="relative  md:h-[243px] w- md:w-[275px]">
           {/* Sponsored Badge */}
           {/* {sponsored && (
             <div className="absolute top-4 left-4 z-10">
@@ -90,13 +102,13 @@ const HotelCard = ({
           )} */}
 
           {/* Main Image */}
-          <div className="relative h-[220px]  p-[10px]">
+          <div className="relative md:h-[220px]  pt-[10px] pb-[5px] px-[10px]">
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentImageIndex}
                 src={images[currentImageIndex]}
                 alt={`${name} view ${currentImageIndex + 1}`}
-                className="!w-[400px] h-[162px] rounded-[4px] object-cover"
+                className="!w-[400px] h-[130px] md:h-[162px] rounded-[4px] object-cover"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -106,12 +118,12 @@ const HotelCard = ({
           </div>
 
           {/* Thumbnails */}
-          <div className="absolute bottom-3 left-[9px] flex gap-[5px]">
+          <div className="absolute bottom-3 left-[9px] md:flex hidden gap-[5px] md:gap-[5px]">
             {images.slice(0, 3).map((img, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
-                className={`w-[60px] h-[55px] rounded overflow-hidden ${currentImageIndex === index
+                className={`md:w-[60px] md:h-[55px] w-[90%] h-[55px] rounded overflow-hidden ${currentImageIndex === index
                   ? "border-2 border-white"
                   : "border border-transparent"
                   }`}
@@ -123,14 +135,36 @@ const HotelCard = ({
                 />
               </button>
             ))}
-            <button className="w-[60px] h-[55px] bg-black/50 text-white rounded flex items-center justify-center text-xs">
+            <button className="md:w-[60px] md:h-[55px] w-[90%] mr-[10px] h-[55px] bg-black/50 text-white rounded flex items-center justify-center text-xs">
+              View All
+            </button>
+          </div>
+
+          <div className=" bottom-[]  ml-[10px] flex md:hidden gap-[5px] md:gap-[5px]">
+            {images.slice(0, 4).map((img, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`md:w-[60px] md:h-[55px] w-[90%] h-[55px] rounded overflow-hidden ${currentImageIndex === index
+                  ? "border-2 border-white"
+                  : "border border-transparent"
+                  }`}
+              >
+                <img
+                  src={img}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+            <button className="md:w-[60px] md:h-[55px] w-[90%] mr-[10px] h-[55px] bg-black/50 text-white rounded flex items-center justify-center text-xs">
               View All
             </button>
           </div>
         </div>
 
         {/* Right Section - Details */}
-        <div className="flex-1 py-[8px] font-Poppins  w-[40%] pr-[30px] pl-[10px]">
+        <div className="flex-1 mt-2 py-[8px] font-Poppins  md:w-[40%] pr-[30px] pl-[10px]">
           <div className="flex justify-between items-start gap-4">
             <div>
               <h2 className="text-[20px] font-[600] leading-7   text-gray-900">
@@ -163,6 +197,7 @@ const HotelCard = ({
             </div> */}
           </div>
 
+
           <div className="flex gap-3 flex-wrap mt-2">
             {Array.isArray(amenitiesArray) ? (
               amenitiesArray.map((amenity, index) => (
@@ -188,55 +223,85 @@ const HotelCard = ({
             ) : (
               <p>No amenities available</p>
             )}
- 
+
 
           </div>
 
           <div className=" flex relative ">
             <div className=" w-[80%] flex  flex-col gap-[5px] mt-[23px]">
-              {features?.map((feature, index) => (
+              {features.map((feature, index) => (
                 <div key={index} className="flex  gap-2">
-                  <i class="fa-duotone fa-solid mt-[2px]  text-[#b18f2a] fa-check"></i>
+                  <i className="fa-duotone fa-solid mt-[2px]  text-[#b18f2a] fa-check"></i>
                   <span className="text-[#b18f2a]  text-[13px]">{feature}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="flex-1 py-[8px] font-Poppins max-w-[220px] border-l pr-[20px]">
-          <div className="text-right flex flex-col  gap-[5px]">
-            <div className="text-[#0066b2] text-[13px]  font-bold">
-              {ratingText}
+        <div className="flex-1  pl-[10px] py-[8px] font-Poppins max-w-[220px] border-l pr-[20px]">
+          <div className="md:text-right md:justify-end flex flex-col  gap-[5px]">
+            {/* <div className="text-[#0066b2] text-[13px]  font-bold">
+ 
+            </div> */}
+            <div className="  text-[#ffd500] text-[15px] w-[100%] justify-end hidden  md:flex gap-[7px]">
+              <i className="fa-solid fa-star"></i>
+              <i className="fa-solid fa-star"></i>
+              <i className="fa-solid fa-star"></i>
+              <i className="fa-solid fa-star"></i>
             </div>
             <div className="text-[#005f94]   text-[28px] font-bold leading-8">
               {rating}
             </div>
-            <div className="text-[#4a4a4a]   text-[12px]">
+            <div className="text-[#4a4a4a] md:text-right text-left  text-[12px]">
               ({ratings} Ratings)
             </div>
           </div>
 
-          <div className="flex   z-[12] mt-[20px] justify-end">
-            <div className="text-right w-[100%] ">
-              {basePrice && (
-                <div className="text-[#4a4a4a] text-[10px] line-through text-base">
-                  ₹{basePrice?.toLocaleString()}
+          <div className="flex   z-[12] mt-[20px]    md:justify-end">
+            <div className="md:text-right w-[100%] ">
+              {originalPrice && (
+                <div className="text-[#4a4a4a] text-left text-[10px] line-through text-base">
+                  ₹{originalPrice?.toLocaleString()}
                 </div>
               )}
-              <div className="flex items-baseline gap-2 justify-end">
+              <div className="flex items-baseline gap-2 md:justify-end">
                 <span className="text-[22px] font-[600]  text-black">
-                  ₹{basePrice?.toLocaleString()}
+                  ₹{discountedPrice?.toLocaleString()}
                 </span>
               </div>
-              <div className="text-sm text-[400] text -[12] text-[#4a4a4a]  ">
-                + ₹{taxesAndFees?.toLocaleString()} taxes & fees
+
+              <div className=" flex  md:justify-end">
+
+
+                <div className="text-sm text-[400] w-fit md:w-fit md:text-right flex justify-end text -[12] text-[#4a4a4a]  ">
+                  + ₹{taxes?.toLocaleString()} taxes & fees
+                </div>
+
               </div>
-              <div className=" flex justify-end  absolute bottom-[10px] right-4">
-                <div
-                  className=" flex w-[120px]  mt-[4px] cursor-pointer h-[36px] text-[13px] justify-center items-center py-[2px] anime-pink-btn font-[500] font-Poppins px-[10px] text-white rounded-[30px]"
-                  onClick={handleDetails}
-                >
-                  <p>View Details</p>
+              <div className=" flex flex-col gap-[10px]  justify-end  absolute bottom-[10px] right-4">
+
+                <div className="  text-[#ffd500] text-[19px] w-[100%] justify-end md:hidden flex gap-[7px]">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                </div>
+                <div className="  flex items-center gap-[10px]">
+                  <div
+                    className="flex w-[37px] h-[37px] mt-[6px] rounded-full justify-center items-center text-[#fff] bg-[#005f94] cursor-pointer"
+                    onClick={() => window.open("https://wa.me/1234567890", "_blank")}
+                  >
+                    <i className="fa-brands text-[23px] fa-whatsapp"></i>
+                  </div>
+
+
+                  <div
+                    className=" flex w-[120px]  mt-[4px] cursor-pointer  h-[36px] text-[13px] justify-center items-center py-[2px]  bg-[#005f94] font-Poppins px-[10px] text-white rounded-[30px]"
+
+                  >
+                    <p>Inquiry Now</p>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -259,7 +324,6 @@ export default function RoomListing() {
   const [endDate, setEndDate] = useState(dayjs());
   const [hotels, setHotels] = useState([]);
 
-  const dispatch = useDispatch();
 
   const rooms = useSelector((state) => state.landing.getAllRooms);
 
@@ -277,6 +341,7 @@ export default function RoomListing() {
   }, []);
 
   console.log('rooms', rooms)
+
 
   const formatPlaceholder = (dates) => { };
   const handleGuestDetails = () => {
@@ -374,12 +439,21 @@ export default function RoomListing() {
   //   },
   // ];
 
-  const [priceRange, setPriceRange] = useState(20000);
+  const [priceRange, setPriceRange] = useState(18219);
   const [amenities, setAmenities] = useState([]);
   const [isRatingOpen, setIsRatingOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(true);
   const [isAmenitiesOpen, setIsAmenitiesOpen] = useState(true);
   const [selectedRating, setSelectedRating] = useState(0);
+  const [selectedId, setSelectedId] = useState(1);
+
+
+  const packgesButton = [
+    { id: 1, text: "Dubai", whiteImg: dubaiWhite, colorImg: dubaiColor },
+    { id: 2, text: "Canada", whiteImg: canadaWhite, colorImg: canadaColor },
+    { id: 3, text: "Paris", whiteImg: parisWhite, colorImg: parisColor },
+    { id: 4, text: "Usa", whiteImg: usaWhite, colorImg: usaColor },
+  ];
 
   const amenitiesList = [
     "Gym",
@@ -398,32 +472,48 @@ export default function RoomListing() {
     );
   };
 
-  const filteredHotels = hotels.filter((hotel) => {
-    const hotelAmenities = Object.keys(hotel.amenities).filter(
-      (key) => hotel.amenities[key]
-    );
-    const hasSelectedAmenities = amenities.every((amenity) =>
-      hotelAmenities.includes(amenity.toLowerCase())
-    );
-
-    const isWithinPriceRange = hotel.basePrice <= priceRange;
-
-    const meetsRatingCriteria = selectedRating === 0 || hotel.rating >= selectedRating;
-
-    return hasSelectedAmenities && isWithinPriceRange && meetsRatingCriteria;
-  });
-
-
   return (
     <>
-      <RoomHeader />
+      {/* <RoomHeader /> */}
 
-      <div className="flex flex-col w-full font-Poppins pt-[150px] min-h-screen">
-        {/* <div className="hero-background"></div> */}
 
-        <div className="w-[75%]   2xl:w-[1400px] gap-[20px] mt-[5px]  md:flex  mx-auto">
-          <div className="w-[300px]  border max-w-md mx-auto rounded-[10px] bg-white  h-fit overflow-hidden">
-            <div className="p-5">
+      <div className=" flex flex-col font-Poppins md:w-[75%]  justify-between  mx-auto  2xl:w-[1390px]  pt-[160px] gap-[20px] px-[20px]">
+        {/* <h1 className=" flex font-[500] font-Poppins text-[25px] ">
+            Select a Country to Apply for Your<span className=" flex font-[600] pl-[10px] text-[#005f94]">
+            Visa
+            </span>
+          </h1> */}
+        <div className=" flex  font-Poppins  overflow-x-auto  w-[100%] gap-[18px]" >
+          {packgesButton.map((btn) => (
+            <button
+              key={btn.id}
+              onClick={() => setSelectedId(btn.id)}
+              className={`w-fit h-fit py-[10px] px-[12px] gap-[8px] flex items-center text-[16px] flex-shrink-0 rounded-tl-[11px] rounded-br-[11px] ${selectedId === btn.id
+                ? "bg-[#005f94] text-[#fff]"
+                : "border border-[#005f94] text-[#005f94] bg-transparent"
+                }`}
+            >
+              <img
+                className="w-[23px] h-[23px]"
+                src={selectedId === btn.id ? btn.whiteImg : btn.colorImg}
+                alt={btn.text}
+              />
+              {btn.text}
+            </button>
+          ))}
+        </div>
+
+
+      </div>
+
+
+      <div className=" px-[10px]">
+        <BookingAlliance />
+      </div>
+      <div className="flex flex-col font-Poppins md:w-[75%] mb-[50px] justify-between  mx-auto  2xl:w-[1400px] min-h-screen">
+        <div className="   gap-[20px] mt-[5px] justify-between w-[100%]  md:flex  mx-auto">
+          <div className="w-[300px]  border-[1.1px] max-w-md mx-auto rounded-[10px] shadow-lg border-[#005f94] bg-white  h-fit overflow-hidden">
+            <div className="p-5 hidden md:flex  flex-col ">
               <h1 className="text-2xl font-[500] mb-2">Filters</h1>
 
               {/* Price Range Section */}
@@ -435,13 +525,13 @@ export default function RoomListing() {
                   <span className="text-[15px] font-[400]">Price Range</span>
                   <span
                     className="text-2xl transform transition-transform duration-200"
-                    style={{
-                      transform: isPriceOpen
-                        ? "rotate(0deg)"
-                        : "rotate(-45deg)",
-                    }}
+                  // style={{
+                  //   transform: isPriceOpen
+                  //     ? "rotate(0deg)"
+                  //     : "rotate(-45deg)",
+                  // }}
                   >
-                    -
+                    <i className={` text-[17px] fa-solid  ${isPriceOpen ? 'fa-minus' : ' fa-plus '}`}></i>
                   </span>
                 </button>
 
@@ -450,12 +540,12 @@ export default function RoomListing() {
                     <div className="relative h-2 bg-gray-200 rounded-full">
                       <div
                         className="absolute h-full bg-blue-500 rounded-full"
-                        style={{ width: `${(priceRange / 20000) * 100}%` }}
+                        style={{ width: `${(priceRange / 18219) * 100}%` }}
                       />
                       <input
                         type="range"
                         min="0"
-                        max="20000"
+                        max="18219"
                         value={priceRange}
                         onChange={(e) => setPriceRange(Number(e.target.value))}
                         className="absolute w-full h-full opacity-0 cursor-pointer"
@@ -478,13 +568,13 @@ export default function RoomListing() {
                   <span className="text-xl font-[500]">Amenities</span>
                   <span
                     className="text-2xl transform transition-transform duration-200"
-                    style={{
-                      transform: isAmenitiesOpen
-                        ? "rotate(0deg)"
-                        : "rotate(-45deg)",
-                    }}
+                  // style={{
+                  //   transform: isPriceOpen
+                  //     ? "rotate(0deg)"
+                  //     : "rotate(-45deg)",
+                  // }}
                   >
-                    -
+                    <i class={` text-[17px] fa-solid  ${isAmenitiesOpen ? 'fa-minus' : ' fa-plus '}`}></i>
                   </span>
                 </button>
 
@@ -544,13 +634,13 @@ export default function RoomListing() {
                   <span className="text-xl font-[500]">Rating</span>
                   <span
                     className="text-2xl transform transition-transform duration-200"
-                    style={{
-                      transform: !isRatingOpen
-                        ? "rotate(-45deg)"
-                        : "rotate(0deg)",
-                    }}
+                  // style={{
+                  //   transform: isPriceOpen
+                  //     ? "rotate(0deg)"
+                  //     : "rotate(-45deg)",
+                  // }}
                   >
-                    +
+                    <i class={` text-[17px] fa-solid  ${isRatingOpen ? 'fa-minus' : ' fa-plus '}`}></i>
                   </span>
                 </button>
 
@@ -606,13 +696,17 @@ export default function RoomListing() {
               </div>
             </div>
           </div>
-          <div className="w-[90%] mx-auto  md:h-[89vh] 2xl:h-[100%]  overflow-y-auto space-y-6">
+          <div className="w-[90%] md:w-fit mx-auto  md:h-[89vh] 2xl:h-[100%] md:mt-0 mt-[40px]  overflow-y-auto space-y-6">
             {hotels.slice(0, 5).map((hotel, index) => (
               <HotelCard key={index} {...hotel} />
             ))}
           </div>
+
+
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }

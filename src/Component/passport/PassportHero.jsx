@@ -6,7 +6,7 @@ import mainimg from "../../../public/passport/hero.avif"
 export default function PassportHero() {
   return (
     <>
-      <div className="2xl:w-[1400px]  relative  font-Poppins  w-[85%] pt-[160px] mx-auto p-4">
+      <div className="2xl:w-[1370px]  relative  font-Poppins  w-[95%] md:w-[85%]  mx-auto px-4">
         {/* Breadcrumb */}
         {/* <nav className="flex items-center gap-2 mb-8 text-sm">
         <a href="/" className="text-[#0095FF] hover:underline">
@@ -20,8 +20,8 @@ export default function PassportHero() {
         <span className="text-[#0095FF]">Dubai Visa</span>
       </nav> */}
 
-        <div className="flex flex-col w-[85%]  mx-auto relative lg:flex-row items-center justify-between">
-          <div className=" ">
+        <div className="flex flex-col 2xl:w-[1370px] md:w-[85%]  mx-auto relative lg:flex-row items-center justify-between">
+          <div className=" w-[100%] md:w-fit ">
             {/* Main Heading */}
             {/* <h1 className="text-[35px] font-[500] text-[#1A1A1A] mb-[17px]">
               Dubai Visa 
@@ -29,15 +29,15 @@ export default function PassportHero() {
             <div className=" flex  w-fit relative">
 
 
-              <h1 className="flex font-[600]  mb-[10px] text-[35px]">
-              Apply  
+              <h1 className="flex font-[600]  mb-[10px] text-[25px] md:text-[35px]">
+                Apply
                 <span className="px-[10px] flex text-[#005f94]">Passport</span>Online
 
               </h1>
-              <div className=" absolute    right-[110px] top-[30px]">
+              <div className=" absolute  right-[130px]  md:right-[110px] top-[30px]">
 
 
-                <div className="relative  w-full max-w-[190px]">
+                <div className="relative  w-full max-w-[120px] md:max-w-[190px]">
                   <svg
                     viewBox="0 0 300 80"
                     className="w-full"
@@ -103,7 +103,7 @@ export default function PassportHero() {
                         strokeLinejoin="round"
                       />
 
-                      {/* Quick sketch details */}
+          
                       <path
                         d="M30,31 l5,-2 l10,4 l-5,-4
                M160,33 l8,-3 l6,3 l-4,-3
@@ -160,19 +160,19 @@ export default function PassportHero() {
             {/* Processing Details */}
             <div className="grid grid-cols-2 mt-[40px] gap-x-24">
               <div>
-                <div className="text-[#666666] text-[15px] mb-1.5">
+                <div className="text-[#666666] text-[13px] md:text-[15px] mb-1.5">
                   Processing time
                 </div>
-                <div className="text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
-                3 to 4 days
+                <div className="text-[18px] md:text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
+                  3 to 4 days
                 </div>
               </div>
               <div>
-                <div className="text-[#666666] text-[15px] mb-1.5">
+                <div className="text-[#666666] text-[13px] md:text-[15px] mb-1.5">
                   Starting from
                 </div>
-                <div className="text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
-            ₹1,999/-
+                <div className=" text-[18px] md:text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
+                  ₹1,999/-
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function PassportHero() {
 
           {/* Dubai Skyline */}
 
-            <img className="   w-[400px]  mt-[-20px] " src={mainimg} />
+          <img className="  w-[260px] md:w-[400px]  mt-[-20px] " src={mainimg} />
 
         </div>
       </div>

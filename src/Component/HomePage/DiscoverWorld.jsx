@@ -97,13 +97,13 @@ export default function DiscoverWorld() {
   };
 
   return (
-    <div className="flex font-Poppins 2xl:w-[1360px] py-[70px] mx-auto w-[88%] md:w-[76%]">
+    <div className="flex font-Poppins 2xl:w-[1370px] py-[70px] mx-auto w-[88%] md:w-[76%]">
       <div className="flex md:flex-row flex-col justify-between  items-center w-[100%]">
         {/* Image Carousel */}
-        <div className="flex md:w-[36%] w-[100%] justify-center items-center relative">
+        <div className="flex md:w-[35%] w-[100%]   mx-auto justify-center items-center left-[4%] md:left-0 relative">
           {/* Left Arrow */}
           <div
-            className="flex absolute md:left-[-30px] top-[35%] md:top-auto left-[-18px] border-[1px] border-[#000] justify-center items-center w-[40px] h-[40px] bg-white md:w-[40px] md:h-[40px] rounded-[100%] cursor-pointer"
+            className="flex absolute md:left-[-30px] 2xl:left-[50px] top-[35%] md:top-auto left-[-18px] border-[1px] border-[#000] justify-center items-center w-[40px] h-[40px] bg-white md:w-[40px] md:h-[40px] rounded-[100%] cursor-pointer"
             onClick={handlePrev}
           >
             <i className="fa-regular fa-arrow-left"></i>
@@ -156,7 +156,7 @@ export default function DiscoverWorld() {
 
           {/* Right Arrow */}
           <div
-            className="flex absolute  top-[35%] md:top-auto  md:right-[-75px] right-[-10px] border-[1px] border-[#000] justify-center items-center w-[40px] h-[40px] rounded-[100%] cursor-pointer"
+            className="flex absolute  top-[35%] md:top-auto  md:right-[-75px] 2xl:right-[-50px] right-[-10px] border-[1px] border-[#000] justify-center items-center w-[40px] h-[40px] rounded-[100%] cursor-pointer"
             onClick={handleNext}
           >
             <i className="fa-regular fa-arrow-right"></i>
@@ -164,8 +164,8 @@ export default function DiscoverWorld() {
         </div>
 
         {/* Text Section */}
-        <div className="flex flex-col gap-[20px] md:w-[45%]">
-          <div className="flex flex-col justify-center  leading-[40px] font-Poppins font-[600] text-[33px]">
+        <div className="flex flex-col gap-[20px] md:w-[49%]">
+          <div className="flex flex-col justify-center  leading-[40px] font-Poppins font-[600] text-[26px] md:text-[33px]">
             <h1>Discover the World,</h1>
             <h1>specially curated for you!</h1>
           </div>

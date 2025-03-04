@@ -198,9 +198,9 @@ export default function Policyce() {
                 href="#"
                 className="hover:text-gray-900 hover:underline"
               >
-                Dubai Tour Packages
+                Dubai Tour Packages   ,            Things to do in Dubai  ,   Places to visit in Dubai
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="hover:text-gray-900 hover:underline"
               >
@@ -211,7 +211,7 @@ export default function Policyce() {
                 className="hover:text-gray-900 hover:underline"
               >
                 Places to visit in Dubai
-              </a>
+              </a> */}
             </div>
           )}
         </div>

@@ -6,7 +6,7 @@ import mainimg from "../../../public/VisaImage/visa2.jpeg"
 export default function VisaHeroSection() {
   return (
     <>
-      <div className="2xl:w-[1400px]  relative  font-Poppins  w-[85%] pt-[160px] mx-auto p-4">
+      <div className="2xl:w-[1370px]  relative  font-Poppins  md:w-[85%]  mx-auto md:p-4">
         {/* Breadcrumb */}
         {/* <nav className="flex items-center gap-2 mb-8 text-sm">
         <a href="/" className="text-[#0095FF] hover:underline">
@@ -20,7 +20,7 @@ export default function VisaHeroSection() {
         <span className="text-[#0095FF]">Dubai Visa</span>
       </nav> */}
 
-        <div className="flex flex-col w-[85%]  mx-auto relative lg:flex-row items-center justify-between">
+        <div className="flex flex-col w-[85%] 2xl:w-[100%]  mx-auto relative lg:flex-row items-center justify-between">
           <div className=" ">
             {/* Main Heading */}
             {/* <h1 className="text-[35px] font-[500] text-[#1A1A1A] mb-[17px]">
@@ -29,15 +29,15 @@ export default function VisaHeroSection() {
             <div className=" flex  w-fit relative">
 
 
-              <h1 className="flex font-[600]  mb-[10px] text-[35px]">
+              <h1 className="flex font-[600] mb-[20px]  md:mb-[10px] text-[25px] md:text-[35px]">
                 Apply for
                 <span className="px-[10px] flex text-[#005f94]">Dubai</span>Visa
 
               </h1>
-              <div className=" absolute    right-[70px] top-[30px]">
+              <div className=" absolute right-[50px]    md:right-[70px] top-[30px]">
 
 
-                <div className="relative  w-full max-w-[140px]">
+                <div className="relative  w-full max-w-[120px] md:max-w-[140px]">
                   <svg
                     viewBox="0 0 300 80"
                     className="w-full"
@@ -160,18 +160,18 @@ export default function VisaHeroSection() {
             {/* Processing Details */}
             <div className="grid grid-cols-2 gap-x-24">
               <div>
-                <div className="text-[#666666] text-[15px] mb-1.5">
+                <div className="text-[#666666] text-[13px] md:text-[15px] mb-1.5">
                   Processing time
                 </div>
-                <div className="text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
+                <div className="md:text-[22px] text-[17px]  font-[500] text-[#1A1A1A] tracking-tight">
                   Up to 48 hours
                 </div>
               </div>
               <div>
-                <div className="text-[#666666] text-[15px] mb-1.5">
+                <div className="text-[#666666] text-[13px] md:text-[15px] mb-1.5">
                   Starting from
                 </div>
-                <div className="text-[22px] font-[500] text-[#1A1A1A] tracking-tight">
+                <div className="md:text-[22px] text-[17px] font-[500] text-[#1A1A1A] tracking-tight">
                   ₹1,999/-
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function VisaHeroSection() {
 
           {/* Dubai Skyline */}
 
-            <img className="   w-[400px]  mt-[-40px] " src={mainimg} />
+            <img className="   md:w-[400px] w-[450px] mt-[-30px]  md:mt-[-40px] " src={mainimg} />
 
         </div>
       </div>

@@ -1,21 +1,21 @@
-import React from "react";
+import React ,{ forwardRef }  from "react";
 
-export default function InclustutionEx() {
+const InclustutionEx = forwardRef((props, ref) => {
   return (
     <>
-      <div className=" w-[100%] mx-auto p-6">
-        <h2 className="text-center text-3xl font-script text-orange-400 mb-8">
+      <div ref={ref}  className=" w-[100%] mx-auto p-6">
+        <h2 className="text-center text-[30px]  font-[500] font-Poppins text-[#005f94] mb-8">
           End Of Trip
         </h2>
 
-        <div className="bg-white rounded-lg py-6  px-[60px] border shadow-md">
+        <div className="bg-white rounded-lg py-6 px-[20px]  w-[100%] md:px-[60px] border shadow-md">
           <h3 className="text-lg font-medium mb-">
             What's inside the package?
           </h3>
           <span className=" flex w-[100%] my-[20px] bg-[#cdcdcd] h-[0.8px] "></span>
-          <div className=" flex w-[100%] justify-between">
+          <div className=" flex flex-col md:flex-row w-[100%] justify-between">
             {/* Inclusions */}
-            <div className=" w-[45%]">
+            <div className=" md:w-[45%]">
               <h4 className="font-medium mb-4">Inclusions</h4>
               <ul className="space-y-3">
                 {[
@@ -25,8 +25,8 @@ export default function InclustutionEx() {
                   "Dubai Frame Tickets - Dubai Frame Ticket on a Shared basis and ticket",
                   "Dhow Cruise Dubai Marina - Marina Dinner Cruise (With Shared Transfers)",
                   "Dubai Desert Safari with BBQ Dinner - All-In-One-Package on a Shared basis",
-                  "Burj Khalifa Tickets At The Top 124th 125th Floor - At the Top (Level 124 & 125) on a Shared basis and ticket",
-                  "AYA Universe Tickets, Dubai - AYA Universe Admission Tickets on a Shared basis and ticket",
+ 
+
                   "Airport transfer from Dubai International Airport to Standard Hotel",
                   "Airport transfer from Dubai International Airport",
                   "Daily Breakfast",
@@ -49,11 +49,11 @@ export default function InclustutionEx() {
                 ))}
               </ul>
             </div>
-            <span className=" flex h-[78vh]   bg-[#cdcdcd] w-[1px] "></span>
+            <span className="  hidden md:flex h-[78vh]   bg-[#cdcdcd] w-[1px] "></span>
             {/* Exclusions */}
-            <div className=" w-[45%]">
+            <div className=" md:w-[45%] mt-[30px] md:mt-[0px]">
               <h4 className="font-medium mb-4">Exclusions</h4>
-              <ul className="space-y-3 px-[60px]">
+              <ul className="space-y-3 ">
                 {[
                   "Expenses of a personal nature",
                   "Meals not mentioned in the itinerary or inclusions",
@@ -84,5 +84,6 @@ export default function InclustutionEx() {
         </div>
       </div>
     </>
-  );
-}
+  )
+})
+export default InclustutionEx;

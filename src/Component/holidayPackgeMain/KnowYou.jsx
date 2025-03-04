@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { ChevronUp,X } from "lucide-react";
+import { Modal as NextUIModal, ModalContent } from "@nextui-org/react";
+import React ,{forwardRef}from "react";
 
-
-
-export default function KnowYou() {
+const KnowYou = forwardRef((props, ref) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [detailsopen, setDetailsOpen] = useState(false);
   // const [isOpen, setIsOpen] = useState(false)
 
-  // if (!isOpen) return null
+const handleDetailsClose=()=>{
+  setDetailsOpen(false)
+}
+const handleDetailsOpen=()=>{
+  setDetailsOpen(true)
+}
 
   return (
     <>
-      <div className=" w-[100%] mx-auto space-y-6 p-6">
+      <div className=" w-[100%] mx-auto space-y-6 p-4 md:p-6">
         {/* Know Before You Go Section */}
         <div className="bg-white rounded-lg border-[1px]  p-3 shadow-sm">
           <div className="flex items-center justify-between ">
@@ -114,7 +121,7 @@ export default function KnowYou() {
             </h2>
             <button
               className="text-gray-600 hover:text-gray-900"
-              onClick={() => setIsOpen(true)}
+        onClick={handleDetailsOpen}
             >
               Read More
             </button>
@@ -123,93 +130,99 @@ export default function KnowYou() {
         </div>
       </div>
 
-      {/* <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="relative bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-      
-        <button
-          onClick={() => setIsOpen(false)}
-          className="absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+    
+    
+   
 
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-6">Additional Information</h2>
+    <NextUIModal isOpen={detailsopen} onClose={handleDetailsClose}>
+        <ModalContent className="md:max-w-[1160px] font-Poppins max-w-[760px] relative  bg-transparent shadow-none rounded-2xl z-[700] flex justify-center !py-0 mx-auto  h-[760px]  ">
+          {(handleDetailsClose) => (
+            <>
+              <div className="relative w-[100%] max-w-[1130px] mt-[10px]   px-[40px] bg-white   rounded-2xl z-[100] flex justify-center !py-0 mx-auto  h-[92%]">
+                <div
+                  className=" absolute right-[-13px]  top-[-13px]  flex gap-[5px]  z-[300] items-center cursor-pointer py-[5px]  border-red rounded-bl-[8px] px-[5px]"
+                  onClick={handleDetailsClose}
+                >
+                  <i className=" text-[30px] text-[red] shadow-delete-icon bg-white   rounded-full fa-solid fa-circle-xmark"></i>
+                </div>
+                <div className=" w-[100%] py-[30px] overflow-y-auto mx-auto  bg-white">
+      <h1 className="text-2xl font-semibold text-gray-700 mb-6">Additional Information</h1>
 
+      <div className="space-y-6">
+        <section>
+          <h2 className="text-lg font-medium text-gray-700 mb-3 underline">About the tour:</h2>
+          <p className="text-gray-600 leading-relaxed">
+            Dubai with its bold architecture and over-the-top style is the largest city in the United Arab Emirates that
+            showcases a distinct blend of its Bedouin heritage and an ultra-modern culture. This classic 5-day tour of
+            Dubai lets you explore the famous attractions of the city including, the charming Jumeirah Mosque, Mall of
+            the Emirates, Burj Al Arab and many more. From exploring the cultural heritage and the architectural
+            brilliance it exhibits to cruising through the Dubai Marina canal with the view of lightning skyscrapers,
+            this tour will give you an experience out of the ordinary. Your astonishment wouldn't cease here, wait till
+            you stand tall on the 124th floor in the world's tallest building and framing this memorable moment with
+            some unique photographs amidst the aerial views of Dubai city, it would be an experience totally worth
+            cherishing.
+          </p>
+        </section>
 
-          <div className="space-y-4 mb-6">
-            <h3 className="font-medium underline">About the tour:</h3>
-            <p className="text-gray-700 leading-relaxed">
-              Discover the magic of Dubai on a luxurious 5-day tour, where bold architecture and rich heritage unite in perfect harmony. Immerse yourself in the city's modern marvels, visiting iconic sites like Jumeirah Mosque, Mall of the Emirates, AYA Universe and Dubai Frame. Cruise along the Dubai Marina Canal aboard a Dhow, capturing the glittering skyline. Then, reach new heights at the 124th floor of Burj Khalifa, capturing breathtaking aerial views. Prepare for an adrenaline-fueled Dubai desert safari, with dune bashing, sandboarding, and camel rides. This extraordinary journey promises a fusion of culture, architecture, and excitement, creating cherished memories to cherish forever.
-            </p>
-          </div>
+        <p className="text-gray-600 italic">
+          Please note that the above prices may vary at the time of booking due to high fluctuations in the prices. Send
+          an enquiry to know more.
+        </p>
 
-      
-          <div className="space-y-2 mb-6">
-            <p className="text-gray-700 italic">
-              Please note that the above prices may vary at the time of booking due to high fluctuations in the prices. Send an enquiry to know more.
-            </p>
-            <p className="text-gray-700 italic">
-              Also, these prices are not applicable for the blackout dates (20th Dec,23 - 5th Jan,24)
-            </p>
-          </div>
+        <p className="text-gray-600 italic">
+          Also, these prices are not applicable for the blackout dates (20th Dec,22 - 5th Jan,23)
+        </p>
 
-         
-          <div className="space-y-4 mb-6">
-            <h3 className="font-medium underline">Quick Info:</h3>
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <span className="font-medium">Start Point:</span>
-                <span className="text-gray-700">Dubai</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="font-medium">End Point:</span>
-                <span className="text-gray-700">Dubai</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="font-medium">Duration:</span>
-                <span className="text-gray-700">5 Days, 4 Nights</span>
-              </div>
+        <section>
+          <h2 className="text-lg font-medium text-gray-700 mb-3">Quick info:</h2>
+          <div className="space-y-2">
+            <div>
+              <span className="font-medium text-gray-700">Start Point:</span>
+              <span className="text-gray-600 ml-2">Delhi/Mumbai/Bangalore Airport</span>
+            </div>
+            <div>
+              <span className="font-medium text-gray-700">End Point:</span>
+              <span className="text-gray-600 ml-2">Delhi/Mumbai/Bangalore Airport</span>
+            </div>
+            <div>
+              <span className="font-medium text-gray-700">Duration:</span>
+              <span className="text-gray-600 ml-2">5 Days, 4 Nights</span>
             </div>
           </div>
+        </section>
 
-    
-          <div className="space-y-4">
-            <h3 className="font-medium underline">Experiences Covered:</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Marina Dhow Cruise with Buffet Dinner</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Dubai Dolphinarium</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Desert Safari With BBQ Dinner and Tanoura Show</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Half-Day City Tour Of Dubai</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Dubai Mall</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Burj Khalifa 124th & 125th Floor Ticket</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-lg mt-1">•</span>
-                <span>Dubai Aquarium and Underwater Zoo</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <p className="text-gray-600 italic">
+          Please note that flight prices are dynamic and may change according to the date of travel. Send an enquiry to
+          know more.
+        </p>
+
+        <section>
+          <h2 className="text-lg font-medium text-gray-700 underline mb-3">Experiences Covered:</h2>
+          <ul className="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Half Day City Tour Of Dubai</li>
+            <li>Dhow Cruise Dinner at Marina with Entertainment Shows</li>
+            <li>Desert Safari With BBQ dinner and Tanura Show</li>
+            <li>Burj Khalifa 124th Floor Ticket</li>
+          </ul>
+        </section>
       </div>
-    </div> */}
+    </div>
+              </div>
+            </>
+          )}
+        </ModalContent>
+      </NextUIModal>
+
+
+
+
+
+
+
+
+
     </>
-  );
-}
+  )
+})
+
+export default KnowYou   

@@ -1,79 +1,46 @@
+import { Clock, Section } from "lucide-react"
+
+
+import {
+  Card,
+  CardBody,
+  Input,
+
+
+  Button,
+} from "@nextui-org/react"
+import { Select, SelectItem } from "@nextui-org/react";
+import { motion } from "framer-motion";
+
+
+import { Phone, PhoneIcon as WhatsApp, } from "lucide-react"
 import { useEffect, useRef, useState } from "react";
 import Document from "./Document";
 import AllAboutPassport from "./AllAboutPassport";
 import PassportFaq from "./PassportFaq";
-import { ApiGet } from "../../helper/axios";
+import { useNavigate } from "react-router-dom";
+import Footer from "../footer/Footer";
+import { ApiGet, ApiPost } from "../../helper/axios";
 
 export default function ListingPassport() {
 
-    const [visaPackages, setVisaPackages] = useState([]);
-  
-    useEffect(() => {
-      const fetchVisaPackages = async () => {
-        try { 
-          const response = await ApiGet("/admin/passport-inquiries");
-          console.log('response', response)
-          setVisaPackages(response.room);
-        } catch (error) {
-          console.error("Error fetching visa packages:", error);
-        }
-      };
-  
-      fetchVisaPackages();
-    }, []);
-  // const visaPackages = [
-  //   {
-  //     title: "New Passport Application",
-  //     processingTime: "Up to 10 days",
-  //     validity: "10 years",
-  //     entry: "Multiple",
-  //     fees: "3,499",
-  //     isPopular: true,
-  //   },
-  //   {
-  //     title: "Tatkal Passport (Express)",
-  //     processingTime: "Up to 48 hours",
-  //     validity: "10 years",
-  //     entry: "Multiple",
-  //     fees: "7,999",
-  //     isPopular: true,
-  //   },
-  //   {
-  //     title: "Passport Renewal",
-  //     processingTime: "Up to 7 days",
-  //     validity: "10 years",
-  //     entry: "Multiple",
-  //     fees: "3,999",
-  //     isPopular: false,
-  //   },
-  //   {
-  //     title: "Lost/Damaged Passport Replacement",
-  //     processingTime: "Up to 14 days",
-  //     validity: "10 years",
-  //     entry: "Multiple",
-  //     fees: "5,999",
-  //     isPopular: false,
-  //   },
-  //   {
-  //     title: "Child Passport (Below 18 Years)",
-  //     processingTime: "Up to 10 days",
-  //     validity: "5 years",
-  //     entry: "Multiple",
-  //     fees: "2,499",
-  //     isPopular: false,
-  //   },
-  //   {
-  //     title: "Family Passport Package",
-  //     processingTime: "Up to 10 days",
-  //     validity: "10 years",
-  //     entry: "Multiple",
-  //     fees: "14,999",
-  //     isPopular: true,
-  //     includesNote: "(Includes 2 Adults + 1 Child)",
-  //   },
-  // ]
 
+  const footerRef = useRef(null);
+  const [visaPackages, setVisaPackages] = useState([]);
 
+  useEffect(() => {
+    const fetchVisaPackages = async () => {
+      try {
+        const response = await ApiGet("/admin/passport-inquiries");
+        console.log('response', response)
+        setVisaPackages(response.room);
+      } catch (error) {
+        console.error("Error fetching visa packages:", error);
+      }
+    };
+
+    fetchVisaPackages();
+  }, []);
 
   // Define refs for each section
   const documentRef = useRef(null);
@@ -140,44 +107,53 @@ export default function ListingPassport() {
   //     });
   //   }
   // };
+
+
+
+
+
   return (
     <>
-      <nav className="border rounded-tl-[20px] shadow-md rounded-br-[20px]  w-[78%] mx-auto border-[#E5E5E5] relative">
-        <div className="max-w-[1400px] mx-auto relative">
-          {/* Sliding Box with Dynamic Width */}
-          <div
-            className="absolute top-0 left-0 h-[40px] rounded-tl-[20px] shadow-md rounded-br-[20px] mt-[7px] rounded-[1px] bg-[#F59E0B] transition-all duration-300 ease-in-out"
-            style={{
-              transform: `translateX(${buttonPositions[activeButton]}px)`,
-              width: `${buttonWidths[activeButton]}px`,
-            }}
-          ></div>
+      <section className=" flex overflow-x-auto w-[100%]">
 
-          {/* Navigation Menu */}
-          <ul className="flex items-center">
-            {Object.keys(buttonPositions).map((item) => (
-              <li key={item}>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleScroll(item);
-                  }}
-                  className={`inline-block px-6 py-4 font-Poppins text-[15px] transition-colors relative -mb-[1px] ${activeButton === item
-                    ? "!text-white" // White text + Bold for active button
-                    : "text-[#666666] font-normal"
-                    }`}
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
 
-      <div className="max-w-[1400px] font-Poppins w-[80%] mx-auto mt-[0px] p-6">
-        <h1 className="flex font-[600] text-[35px] mb-6">Types of of Indian Passport</h1>
+        <nav className="border mx-[10px] rounded-tl-[20px] min-w-max  2xl:w-[1370px] shadow-md rounded-br-[20px]  w-[78%] md:mx-auto border-[#E5E5E5] relative">
+          <div className="max-w-[1400px] mx-auto relative">
+            {/* Sliding Box with Dynamic Width */}
+            <div
+              className="absolute top-0 left-0 h-[40px] rounded-tl-[20px] shadow-md rounded-br-[20px] mt-[7px] rounded-[1px] bg-[#F59E0B] transition-all duration-300 ease-in-out"
+              style={{
+                transform: `translateX(${buttonPositions[activeButton]}px)`,
+                width: `${buttonWidths[activeButton]}px`,
+              }}
+            ></div>
+
+            {/* Navigation Menu */}
+            <ul className="flex items-center">
+              {Object.keys(buttonPositions).map((item) => (
+                <li key={item}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleScroll(item);
+                    }}
+                    className={`inline-block px-6 py-4 font-Poppins text-[15px] transition-colors relative -mb-[1px] ${activeButton === item
+                      ? "!text-white" // White text + Bold for active button
+                      : "text-[#666666] font-normal"
+                      }`}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      </section>
+
+      <div className="2xl:w-[1370px]  font-Poppins md:w-[80%] mx-auto mt-[0px] p-6">
+        <h1 className="flex font-[600] text-[25px] md:text-[35px] mb-6">Types of of Indian Passport</h1>
 
         <div className="grid grid-cols-1   lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2   flex flex-col gap-[30px]">
@@ -198,16 +174,27 @@ export default function ListingPassport() {
             </div>
           </div>
           <div>
-            <ApplicationForm />
+            <ApplicationForm footerRef={footerRef} />
           </div>
 
         </div>
       </div>
+      <Footer ref={footerRef} />
+
     </>
   )
 }
 
-function VisaCard({ title, processingTime, travelerType,  processingType, validity, assistanceType, fees, isPopular, includesNote }) {
+function VisaCard({ title, processingTime, stayPeriod, validity, entry, fees, isPopular, includesNote }) {
+
+
+
+
+
+
+
+
+
   return (
 
     <>
@@ -280,23 +267,23 @@ function VisaCard({ title, processingTime, travelerType,  processingType, validi
             <div className="space-y-2.5">
               <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Validity:</span>
-                <span className="text-[#1A1A1A] text-sm">{validity}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Traveler Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{travelerType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#666666] text-sm">Processing Time:</span>
                 <span className="text-[#1A1A1A] text-sm">{processingTime}</span>
               </div>
               <div className="flex justify-between">
+                <span className="text-[#666666] text-sm">Traveler Type:</span>
+                <span className="text-[#1A1A1A] text-sm">{stayPeriod}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#666666] text-sm">Processing Time:</span>
+                <span className="text-[#1A1A1A] text-sm">{validity}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Processing Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{processingType}</span>
+                <span className="text-[#1A1A1A] text-sm">{entry}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[#666666] text-sm">Assistance Type:</span>
-                <span className="text-[#1A1A1A] text-sm">{assistanceType}</span>
+                <span className="text-[#1A1A1A] text-sm">{entry}</span>
               </div>
               <div className="flex justify-between items-center pt-1">
                 <span className="text-[#666666] text-sm">Fees:</span>
@@ -306,6 +293,9 @@ function VisaCard({ title, processingTime, travelerType,  processingType, validi
           </div>
         </div>
       </div>
+
+
+
     </>
 
 
@@ -313,90 +303,342 @@ function VisaCard({ title, processingTime, travelerType,  processingType, validi
   )
 }
 
-function ApplicationForm({ selectedVisa, setSelectedVisa, travellers, setTravellers, email, setEmail, phone, setPhone }) {
+function ApplicationForm({ selectedVisa, setSelectedVisa, travellers, setTravellers, email, setEmail, phone, setPhone, footerRef }) {
+  // const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    phone: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setMessage("");
+
+    try {
+      const response = await ApiPost("/admin/passport-form", formData);
+
+      if (response.data) {
+        setMessage("Enquiry submitted successfully!");
+        setFormData({ email: "", phone: "" });
+      }
+    } catch (error) {
+      setMessage("Failed to submit enquiry. Please try again.");
+    }
+
+    setIsSubmitting(false);
+  };
+  // const isMobile = window.innerWidth <= 768;
+  // const [scrollPosition, setScrollPosition] = useState(false);
+  // const [isFooterVisible, setFooterVisible] = useState(false);
+  // const footerRef = useRef();
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 430 && !isFooterVisible) {
+  //       setScrollPosition(true);
+  //     } else {
+  //       setScrollPosition(false);
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [isFooterVisible]);
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       setFooterVisible(entry.isIntersecting);
+  //     },
+  //     { threshold: 0.1 }
+  //   );
+
+  //   if (footerRef.current) {
+  //     observer.observe(footerRef.current);
+  //   }
+
+  //   return () => {
+  //     if (footerRef.current) {
+  //       observer.unobserve(footerRef.current);
+  //     }
+  //   };
+  // }, []);
+
+  const [scrollPosition, setScrollPosition] = useState(false);
+  const [isFooterVisible, setFooterVisible] = useState(false);
+
+  // Detect when the footer is visible
+  // useEffect(() => {
+  //   if (footerRef?.current) {
+  //     const observer = new IntersectionObserver(
+  //       ([entry]) => {
+  //         setFooterVisible(entry.isIntersecting); // Updates state when footer enters/exits viewport
+  //       },
+  //       { threshold: 0.1 }
+  //     );
+
+  //     observer.observe(footerRef.current);
+
+  //     return () => observer.unobserve(footerRef.current);
+  //   }
+  // }, [footerRef]);
+
+
+
+
+  useEffect(() => {
+    // Only run if footerRef.current exists.
+    if (!footerRef?.current) return;
+
+    // Capture the element so it remains consistent in cleanup.
+    const element = footerRef.current;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setFooterVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(element);
+
+    // Cleanup: unobserve the same element.
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [footerRef]);
+
+
+  // Detect Scroll Position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 430 && !isFooterVisible) {
+        setScrollPosition(true);
+      } else {
+        setScrollPosition(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isFooterVisible]);
 
 
   return (
     <>
-      <div className="bg-white border  overflow-hidden font-Poppins shadow-md rounded-tl-[27px] rounded-br-[27px]">
-        <div className="bg-[#005f94]  text-[#fff] p-3 flex items-center gap-2">
-          {/* <Clock className="w-5 h-5" /> */}
-          <span className="text-sm">It takes less than 2 minutes to Apply</span>
-        </div>
+      {/* <motion.div
+  initial={{
+    translateX: "-50%",
+    translateY: "-50%",
+  }}
+  animate={
+    scrollPosition
+      ? {
+          translateX: "0",
+          translateY: "0",
+        } // Fixed position on scroll
+      : {
+          translateX: "0",
+          translateY: "0",
+        } // Center position when not scrolled
+  }
+  transition={{ duration: 0.7, ease: "easeOut" }}
+  style={{
+    position: scrollPosition ? "fixed" : "relative",
+ top:scrollPosition? "140px ":"0px",
+ left:scrollPosition? " ":"",
+  }}
+ */}
+      <motion.div
+        // initial={{ translateX: "-50%", translateY: "-50%" }}
+        animate={{ translateX: "0", translateY: "0" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        style={{
+          position: isFooterVisible ? "relative" : scrollPosition ? "fixed" : "relative",
+          top: isFooterVisible ? "auto" : scrollPosition ? "140px" : "0px",
+          // left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 50,
+        }}
+      >
 
-        <div className="p-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[15px] font-medium">Apply Online</h3>
-            <span className="text-[#666666]">−</span>
-          </div>
+        <div className={`transition-all duration-300 md:flex  hidden flex-col mx-auto  w-[400px] ease-in-out top-0 left-0 z-50 bg-white shadow-lg" : "relative`}>
+          <div id="contact-form" className={`bg-white  border  overflow-hidden font-Poppins shadow-md rounded-tl-[27px] rounded-br-[27px]`}>
+            <div className="bg-[#005f94]  text-[#fff] p-3 flex items-center gap-2">
+              {/* <Clock className="w-5 h-5" /> */}
+              <span className="text-sm">It takes less than 2 minutes to Apply</span>
+            </div>
 
-          <div className="space-y-3">
-            <input
-              type="email"
-              placeholder="Email ID"
-              className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2]"
-            />
-            <input
-              type="tel"
-              placeholder="Contact No"
-              className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2]"
-            />
+            <div className="p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-[15px] font-medium">Apply Online</h3>
+                <span className="text-[#666666]">−</span>
+              </div>
 
-            {/* <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
+              <div className="space-y-3">
+                <input
+                  type="email"
+                  placeholder="Email ID"
+                  name="email"
+                  value={formData?.email}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#005f94]"
+                />
+                <input
+                  type="tel"
+                  placeholder="Contact No"
+                  name="phoneNumber"
+                  value={formData?.phone}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#005f94]"
+                />
+
+                {/* <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
               <option>Travellers</option>
             </select> */}
 
-            <div className="flex justify-end items-center gap-2 pt-2 rounded-tl-[20px] rounded-br-[20px]">
-              <span className="text-[#1A1A1A] font-medium">₹0</span>
-              <button className="bg-[#1565C0] ml-[10px] text-white px-3 py-2 rounded-tl-[20px] rounded-br-[20px] font-medium">APPLY NOW</button>
+                <div className="flex justify-end items-center gap-2 pt-2 rounded-tl-[20px] rounded-br-[20px]">
+                  <span className="text-[#1A1A1A] font-medium">₹0</span>
+                  <button className="bg-[#005f94] ml-[10px] text-white px-3 py-2 rounded-tl-[20px] rounded-br-[20px] font-medium"
+                    onClick={handleSubmit}
+                  >APPLY NOW</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-[#E5E5E5] pt-[8px] px-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-[15px] font-medium">Let us Call You</h3>
+                <span className="text-[#666666]">+</span>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-white p-5">
+              <a href="https://wa.me/917506865623" className="flex  -center rounded-tl-[20px] rounded-br-[20px] gap-3 bg-[#005f94] p-2 ">
+                <i className="fa-brands fa-whatsapp text-[25px]  text-[#fff]"></i>
+                <div className="flex text-white flex-col">
+                  <span className="text-xs">Visa on whatsapp</span>
+                  <span className="font-medium">+91 7506865623</span>
+                </div>
+              </a>
+
+              <a href="tel:02240666444" className="flex items-center gap-3 bg-[#005f94] p-2 rounded-tl-[20px] rounded-br-[20px]">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
+                </svg>
+                <div className="flex text-white flex-col">
+                  <span className="text-xs">Call us on</span>
+                  <span className="font-medium">02240666444</span>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3 border-[#1565C0] text-[#1565C0] border-1 p-2 rounded-tl-[20px] rounded-br-[20px]">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                  <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                </svg>
+                <div className="flex flex-col">
+                  <span className="text-xs">Timing</span>
+                  <span className="font-medium">9am to 9pm</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="border-t border-[#E5E5E5] p-5">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[15px] font-medium">Let us Call You</h3>
-            <span className="text-[#666666]">+</span>
+        </div>
+      </motion.div>
+
+      <div className={`transition-all duration-300 md:hidden  flex flex-col  w-[330px] mx-auto ease-in-out top-0 left-0 \ z-50 bg-white shadow-lg" : "relative`}>
+          <div id="contact-form" className={`bg-white  border  overflow-hidden font-Poppins shadow-md rounded-tl-[27px] rounded-br-[27px]`}>
+            <div className="bg-[#005f94]  text-[#fff] p-3 flex items-center gap-2">
+              {/* <Clock className="w-5 h-5" /> */}
+              <span className="text-sm">It takes less than 2 minutes to Apply</span>
+            </div>
+
+            <div className="p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-[15px] font-medium">Apply Online</h3>
+                <span className="text-[#666666]">−</span>
+              </div>
+
+              <div className="space-y-3">
+                <input
+                  type="email"
+                  placeholder="Email ID"
+                  name="email"
+                  value={formData?.email}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#005f94]"
+                />
+                <input
+                  type="tel"
+                  placeholder="Contact No"
+                  name="phoneNumber"
+                  value={formData?.phone}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#005f94]"
+                />
+
+                {/* <select className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#1976D2] text-[#666666]">
+              <option>Travellers</option>
+            </select> */}
+
+                <div className="flex justify-end items-center gap-2 pt-2 rounded-tl-[20px] rounded-br-[20px]">
+                  <span className="text-[#1A1A1A] font-medium">₹0</span>
+                  <button className="bg-[#005f94] ml-[10px] text-white px-3 py-2 rounded-tl-[20px] rounded-br-[20px] font-medium"
+                    onClick={handleSubmit}
+                  >APPLY NOW</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-[#E5E5E5] pt-[8px] px-5">
+              <div className="flex items-center justify-between">
+                <h3 className="text-[15px] font-medium">Let us Call You</h3>
+                <span className="text-[#666666]">+</span>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-white p-5">
+              <a href="https://wa.me/917506865623" className="flex  -center rounded-tl-[20px] rounded-br-[20px] gap-3 bg-[#005f94] p-2 ">
+                <i className="fa-brands fa-whatsapp text-[25px]  text-[#fff]"></i>
+                <div className="flex text-white flex-col">
+                  <span className="text-xs">Visa on whatsapp</span>
+                  <span className="font-medium">+91 7506865623</span>
+                </div>
+              </a>
+
+              <a href="tel:02240666444" className="flex items-center gap-3 bg-[#005f94] p-2 rounded-tl-[20px] rounded-br-[20px]">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
+                </svg>
+                <div className="flex text-white flex-col">
+                  <span className="text-xs">Call us on</span>
+                  <span className="font-medium">02240666444</span>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3 border-[#1565C0] text-[#1565C0] border-1 p-2 rounded-tl-[20px] rounded-br-[20px]">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+                  <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                </svg>
+                <div className="flex flex-col">
+                  <span className="text-xs">Timing</span>
+                  <span className="font-medium">9am to 9pm</span>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
-
-        <div className="space-y-3 text-white p-5">
-          <a href="https://wa.me/917506865623" className="flex  -center rounded-tl-[20px] rounded-br-[20px] gap-3 bg-[#1565C0] p-3 ">
-            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.6 6.3c-1.4-1.5-3.3-2.3-5.3-2.3-4.2 0-7.6 3.4-7.6 7.6 0 1.3.3 2.6 1 3.8l-1 3.9 4-1c1.1.6 2.3 1 3.6 1 4.2 0 7.6-3.4 7.6-7.6 0-2-.8-3.9-2.3-5.4zm-5.3 11.6c-1.1 0-2.3-.3-3.3-.9l-.2-.1-2.4.6.6-2.4-.1-.2c-.6-1-1-2.2-1-3.4 0-3.5 2.8-6.3 6.3-6.3 1.7 0 3.3.7 4.5 1.9s1.9 2.8 1.9 4.5c.1 3.5-2.7 6.3-6.3 6.3z" />
-            </svg>
-            <div className="flex text-white flex-col">
-              <span className="text-xs">Visa on whatsapp</span>
-              <span className="font-medium">+91 7506865623</span>
-            </div>
-          </a>
-
-          <a href="tel:02240666444" className="flex items-center gap-3 bg-[#1565C0] p-3 rounded-tl-[20px] rounded-br-[20px]">
-            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" />
-            </svg>
-            <div className="flex text-white flex-col">
-              <span className="text-xs">Call us on</span>
-              <span className="font-medium">02240666444</span>
-            </div>
-          </a>
-
-          <div className="flex items-center gap-3 border-[#1565C0] text-[#1565C0] border-1 p-3 rounded-tl-[20px] rounded-br-[20px]">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
-              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
-            </svg>
-            <div className="flex flex-col">
-              <span className="text-xs">Timing</span>
-              <span className="font-medium">9am to 9pm</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
     </>
 
 

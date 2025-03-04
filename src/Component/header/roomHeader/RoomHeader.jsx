@@ -12,7 +12,7 @@ export default function RoomHeader() {
           <div className=" flex w-[100%]  z-[100] bg-white font-Poppins  fixed  ">
             <div className=" flex  w-[100%]   gap-[20px] pt-[20px]  !text-[#515151] flex-col  ">
               <div className=" flex   h-fit  w-[100%]">
-                <div className=" flex md:w-[75%] 2xl:w-[1360px] z-[10]  items-center h-[25px] mx-auto">
+                <div className=" flex md:w-[75%] 2xl:w-[1370px] z-[10]  items-center h-[25px] mx-auto">
                   <div className=" flex w-[100%]  relative items-center justify-between ">
                     <div className="relative">
                       <img
@@ -50,7 +50,7 @@ export default function RoomHeader() {
               </div>
               <span className=" flex w-[100%] top-[39px]  h-[1.5px] bg-[#b6b6b6] absolute"></span>
               <div className=" w-[100%]  border-b-[1.5px]  py-[px] flex ms-center">
-                <div className=" flex w-[75%]  2xl:w-[1360px]  items-center justify-between  gap-[10px] mx-auto">
+                <div className=" flex w-[75%]  2xl:w-[1370px]  items-center justify-between  gap-[10px] mx-auto">
                   <div className=" flex w-[79%] 2xl:w-[85.5%]   overflow-x-auto  gap-[40px] items-center justify-start flex-shrink-0">
                     <div className="flex flex-col gap-[5px] text-[#005f94] border-b-[2px] border-[#005f94]  pb-[4px] text-center w-fit flex-shrink-0">
                       <i className="fa-regular  text-[20px] text-[#005f94]    fa-fire-flame-curved"></i>

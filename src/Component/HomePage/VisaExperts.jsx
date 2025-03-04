@@ -1,11 +1,33 @@
-import React, { useRef } from "react";
-import image1 from "../../../public/experts/image1.jpg";
+import React, { useEffect, useRef, useState } from "react";
+import image1 from "../../../public/testimonials/boy1.jpg";
+import image2 from "../../../public/testimonials/girl2.jpg";
+import image3 from  "../../../public/testimonials/boy3.jpg";
+import image4 from "../../../public/testimonials/girl3.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ApiGet } from "../../helper/axios";
 
 export default function VisaExperts() {
   const sliderRef = useRef(null);
+
+  const [visaExperts, setVisaExperts] = useState([]);
+
+
+  useEffect(() => {
+    const fetchVisaPackages = async () => {
+      try { 
+        const response = await ApiGet("/admin/visa-experts");
+        console.log('response', response)
+        setVisaExperts(response.expert);
+      } catch (error) {
+        console.error("Error fetching visa packages:", error);
+      }
+    };
+
+    fetchVisaPackages();
+  }, []);
+
   const testimonialSliderSettings = {
     arrows: true,
     dots: false,
@@ -34,11 +56,11 @@ export default function VisaExperts() {
   };
   return (
     <>
-      <div className="flex font-Poppins mx-auto mt-[20px] w-[89%] md:w-[75%]">
+      <div className="flex font-Poppins mx-auto   2xl:w-[1370px]  mt-[20px] mb-[50px] w-[89%] md:w-[75%]">
         <div className="flex flex-col gap-[60px] w-[100%]">
           <div className="flex flex-col gap-[10px]">
             <h1 className="flex font-[600]  mx-auto text-[25px]">
-            Talk to Our Visa Experts
+              Talk to Our Visa Experts
             </h1>
           </div>
           <div className="flex flex-col  w-[100%] gap-[15px] ">
@@ -48,21 +70,43 @@ export default function VisaExperts() {
                 {...testimonialSliderSettings}
                 ref={sliderRef} 
               >
-                <div className=" !flex gap-[15px] !mr-[10px] ">
+              {visaExperts?.map((item, index) => (                
+                <div key={index} className=" !flex gap-[15px] !mr-[10px] ">
                   <img
                     className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                    src={image1}
+                    src={item?.image}
                   />
                   <div className=" !flex gap-[6px] flex-col">
                     <h1 className=" flex  text-[19px] font-[600] ">
-                      Raj Bhatt
+                      {item?.name}
                     </h1>
                     <div>
                       <p className=" flex text-[14px] text-[#141414]">
-                        Senior Visa Officer
+                        {item?.role}
                       </p>
                       <p className=" flex  text-[#939393] text-[12px] ">
-                        2 Years of Experience
+                        {item?.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                               
+              ))}
+                {/* <div className=" !flex gap-[15px] !mr-[10px] ">
+                  <img
+                    className=" flex w-[80px] object-cover h-[80px] rounded-full "
+                    src={image2}
+                  />
+                  <div className=" !flex gap-[6px] flex-col">
+                    <h1 className=" flex  text-[19px] font-[600] ">
+                      Priya Kapoor
+                    </h1>
+                    <div>
+                      <p className=" flex text-[14px] text-[#141414]">
+                        Visa Process Specialist
+                      </p>
+                      <p className=" flex  text-[#939393] text-[12px] ">
+                        3 Years of Experience
                       </p>
                     </div>
                   </div>
@@ -70,18 +114,18 @@ export default function VisaExperts() {
                 <div className=" !flex gap-[15px] !mr-[10px] ">
                   <img
                     className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                    src={image1}
+                    src={image3}
                   />
                   <div className=" !flex gap-[6px] flex-col">
                     <h1 className=" flex  text-[19px] font-[600] ">
-                      Raj Bhatt
+                      Rohan Mehta
                     </h1>
                     <div>
                       <p className=" flex text-[14px] text-[#141414]">
-                        Senior Visa Officer
+                        Immigration Advisor
                       </p>
                       <p className=" flex  text-[#939393] text-[12px] ">
-                        2 Years of Experience
+                        6 Years of Experience
                       </p>
                     </div>
                   </div>
@@ -89,120 +133,23 @@ export default function VisaExperts() {
                 <div className=" !flex gap-[15px] !mr-[10px] ">
                   <img
                     className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                    src={image1}
+                    src={image4}
                   />
                   <div className=" !flex gap-[6px] flex-col">
                     <h1 className=" flex  text-[19px] font-[600] ">
-                      Raj Bhatt
+                      Neha Verma
                     </h1>
                     <div>
                       <p className=" flex text-[14px] text-[#141414]">
-                        Senior Visa Officer
+                        Visa Documentation Expert
                       </p>
                       <p className=" flex  text-[#939393] text-[12px] ">
-                        2 Years of Experience
+                        4 Years of Experience
                       </p>
                     </div>
                   </div>
-                </div>
-                <div className=" !flex gap-[15px] !mr-[10px] ">
-                  <img
-                    className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                    src={image1}
-                  />
-                  <div className=" !flex gap-[6px] flex-col">
-                    <h1 className=" flex  text-[19px] font-[600] ">
-                      Raj Bhatt
-                    </h1>
-                    <div>
-                      <p className=" flex text-[14px] text-[#141414]">
-                        Senior Visa Officer
-                      </p>
-                      <p className=" flex  text-[#939393] text-[12px] ">
-                        2 Years of Experience
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className=" !flex gap-[15px] !mr-[10px] ">
-                  <img
-                    className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                    src={image1}
-                  />
-                  <div className=" !flex gap-[6px] flex-col">
-                    <h1 className=" flex  text-[19px] font-[600] ">
-                      Raj Bhatt
-                    </h1>
-                    <div>
-                      <p className=" flex text-[14px] text-[#141414]">
-                        Senior Visa Officer
-                      </p>
-                      <p className=" flex  text-[#939393] text-[12px] ">
-                        2 Years of Experience
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                </div> */}
               </Slider>
-              {/* <div className=" flex gap-[15px] ">
-                <img
-                  className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                  src={image1}
-                />
-                <div className=" flex gap-[6px] flex-col">
-                  <h1 className=" flex  text-[19px] font-[600] ">Raj Bhatt</h1>
-                  <div>
-                    <p className=" flex text-[14px] text-[#141414]">
-                      Senior Visa Officer
-                    </p>
-                    <p className=" flex  text-[#939393] text-[12px] ">
-                      2 Years of Experience
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className=" flex gap-[15px] ">
-                <img
-                  className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                  src={image1}
-                />
-                <div className=" flex gap-[6px] flex-col">
-                  <h1 className=" flex  text-[19px] font-[600] ">Raj Bhatt</h1>
-                  <div>
-                    <p className=" flex text-[14px] text-[#141414]">
-                      Senior Visa Officer
-                    </p>
-                    <p className=" flex  text-[#939393] text-[12px] ">
-                      2 Years of Experience
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className=" flex gap-[15px] ">
-                <img
-                  className=" flex w-[80px] object-cover h-[80px] rounded-full "
-                  src={image1}
-                />
-                <div className=" flex gap-[6px] flex-col">
-                  <h1 className=" flex  text-[19px] font-[600] ">Raj Bhatt</h1>
-                  <div>
-                    <p className=" flex text-[14px] text-[#141414]">
-                      Senior Visa Officer
-                    </p>
-                    <p className=" flex  text-[#939393] text-[12px] ">
-                      2 Years of Experience
-                    </p>
-                  </div>
-                </div>
-              </div> */}
-            </div>
-            <div className=" flex gap-[20px] mb-[20px]  mx-auto md:mt-[30px]">
-              <button className=" flex w-[50px]  justify-center items-center h-[50px] custom-shadow2 rounded-full"  onClick={() => sliderRef.current.slickPrev()} >
-                <i class="fa-solid fa-chevron-left"></i>
-              </button>
-              <button className=" flex w-[50px]  justify-center items-center h-[50px] custom-shadow2 rounded-full"       onClick={() => sliderRef.current.slickNext()}>
-                <i class="fa-solid fa-chevron-right"></i>
-              </button>
             </div>
           </div>
         </div>
