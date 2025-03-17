@@ -112,7 +112,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                             setNameFocused(e.target.value !== "")
                                         }
                                         className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                        autocomplete="naqsme"
+                                        autoComplete="naqsme"
                                     />
                                 </div>
 
@@ -144,7 +144,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                                 setNumberFocused(e.target.value !== "")
                                             }
                                             className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                            autocomplete="naqsme"
+                                            autoComplete="naqsme"
                                         />
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                             setEmailFocused(e.target.value !== "")
                                         }
                                         className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                        autocomplete="naqsme"
+                                        autoComplete="naqsme"
                                     />
                                 </div>
 
@@ -207,7 +207,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                                 setPersonFocused(e.target.value !== "")
                                             }
                                             className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                            autocomplete="naqsme"
+                                            autoComplete="naqsme"
                                         />
                                     </div>
                                 </div>
@@ -233,7 +233,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                         setAddressFocused(e.target.value !== "")
                                     }
                                     className="w-full outline-none  px-[10px] text-[15px]  h-[100%]  py-[9px] font-Poppins font-[400] bg-transparent"
-                                    autocomplete="naqsme"
+                                    autoComplete="naqsme"
                                 ></textarea>
                             </div>
                             <div className="relative w-full   h-[87px] border-[1px] border-[#dedede] rounded-lg shadow flex items-center space-x-4 text-[#00000099]">
@@ -257,7 +257,7 @@ export default function TourInquiry({ isOpen, closeAndResetModal }) {
                                         setMessageFocused(e.target.value !== "")
                                     }
                                     className="w-full outline-none  px-[10px] text-[15px]  h-[100%]  py-[9px] font-Poppins font-[400] bg-transparent"
-                                    autocomplete="naqsme"
+                                    autoComplete="naqsme"
                                 ></textarea>
                             </div>
                             <button

@@ -5,7 +5,11 @@ import TaskBar from "../../Component/visaAllCom/TaskBar";
 import ListingVisa from "../../Component/visaAllCom/ListingVisa";
 import VisaAcces from "../../Component/HomePage/VisaAcces";
 import Footer from "../../Component/footer/Footer";
-
+import {
+  Modal as NextUIModal,
+  ModalBody,
+  ModalContent,
+} from "@nextui-org/react";
 import dubaiWhite from "../../../public/visaCountry/Dubai-white.png";
 import dubaiColor from "../../../public/visaCountry/Dubai-color.png"; // Add color images
 import canadaWhite from "../../../public/visaCountry/Canada-white.png";
@@ -15,24 +19,38 @@ import parisColor from "../../../public/visaCountry/Paris-color.png";
 import usaWhite from "../../../public/visaCountry/usa-white.png";
 import usaColor from "../../../public/visaCountry/usa-color.png";
 import { ApiGet } from "../../helper/axios";
+import VisaPopup from "../../Component/serchPopup/VisaPopup";
+
 
 export default function VisaPage() {
   const footerRef = useRef(null);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
 
+  
   useEffect(() => {
-    // Fetch all countries
     const fetchCountries = async () => {
       try {
-        const response = await ApiGet("/admin/countries");
-        setCountries(response.country);
-        // Set the first country as default
-        if (response.country.length > 0) {
-          setSelectedCountry(response.country[0]._id);
+        const response = await ApiGet("/admin/visa-enquiries"); 
+        const inquiries = response.inquiry;
+
+        const uniqueCountries = [];
+        const countrySet = new Set();
+
+        inquiries.forEach((inquiry) => {
+          if (!countrySet.has(inquiry.country._id)) {
+            countrySet.add(inquiry.country._id);
+            uniqueCountries.push(inquiry.country);
+          }
+        });
+
+        setCountries(uniqueCountries);
+
+        if (uniqueCountries.length > 0) {
+          setSelectedCountry(uniqueCountries[0]._id);
         }
       } catch (error) {
-        console.error("Error fetching countries:", error);
+        console.error("Error fetching visa inquiries:", error);
       }
     };
     fetchCountries();
@@ -47,10 +65,35 @@ export default function VisaPage() {
     { id: 3, text: "Paris", whiteImg: parisWhite, colorImg: parisColor },
     { id: 4, text: "Usa", whiteImg: usaWhite, colorImg: usaColor },
   ];
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
 
+    <div className=" hidden md:flex relative    2xl:w-[1390px]  w-[100%] md:w-[75%] mx-auto relative items-center justify-between pt-[160px]">
+      <div className=" w-[100%]  top-[180px]  absolute h-[1px] bg-[#d7d7d7]">
 
+      </div>
+      <div className="  z-[10] font-Poppins mx-auto  px-[13px] flex w-[390px] bg-white  gap-[10px] rounded-[26px] border-[1.5px] custom-sahdow overflow-hidden items-center justify-start h-[45px]" onClick={handleOpenModal}>
+        <i className="fa-solid text-[#515151] fa-magnifying-glass"></i>
+        <input
+          className=" w-[100%] h-[100%]  text-[14px] outline-none"
+          placeholder=" Serch Country"
+          type="text"
+          readOnly
+        />
+      </div>
+
+
+</div>
       <div className=" 2xl:w-[1370px] !bg-[#]  md:pt-[160px] pt-[170px]   w-[100%]   flex flex-col  h-[100%] mx-auto">
         <div className=" flex  flex-col gap-[20px] px-[20px]">
           {/* <h1 className=" flex font-[500] font-Poppins text-[25px] ">
@@ -58,8 +101,8 @@ export default function VisaPage() {
             Visa
             </span>
           </h1> */}
-          <div className=" flex  font-Poppins pb-[40px] overflow-x-auto  w-[100%] gap-[18px]" >
-            {countries.map((country) => (
+          <div className=" flex  font-Poppins pb-[40px] mx-auto overflow-x-auto 2xl:w-[1400px]  md:w-[78%] gap-[18px]" >
+            {countries?.map((country) => (
               <button
                 key={country.id}
                 onClick={() => setSelectedCountry(country._id)}
@@ -88,6 +131,21 @@ export default function VisaPage() {
 
       </div>
       <Footer />
+
+      <NextUIModal
+        className=" bg-transparent  !max-w-[500px]  font-Poppins shadow-none"
+        isOpen={isModalOpen}
+        onOpenChange={handleCloseModal}
+      >
+        <ModalContent className="w-[100%] ">
+          <ModalBody className=" w-[100%] ">
+
+          <VisaPopup onClose={handleCloseModal} />
+
+
+          </ModalBody>
+        </ModalContent>
+      </NextUIModal>
     </>
   );
 }

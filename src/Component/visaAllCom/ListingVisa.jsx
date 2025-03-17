@@ -103,34 +103,52 @@ export default function VisaSection( { countryId }) {
           </div>
         </nav>
       </section>
-      {countryName && visaPackages.length > 0 && (
+      {/* {countryName && visaPackages.length > 0 && (
       <div className="2xl:w-[1370px] font-Poppins w-[95%] md:w-[80%] mx-auto mt-[0px] p-3 md:p-6">
         <h1 className="flex font-[600] text-[25px] md:text-[35px] mb-6">
-        {/* Types of Dubai Visas for Indians */}
-        {isLoading ? "Loading visas..." : `Available Visas for ${countryName}`}
+        {`Types of ${countryName} Visas for Indians`}
         </h1>
 
         <div className="grid grid-cols-1   lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2   flex flex-col gap-[30px]">
-            {/* <div className="grid md:grid-cols-2 gap-6">
-              {visaPackages?.map((pkg, index) => (
-                <VisaCard key={index} {...pkg} />
-              ))}
-            </div> */}
             <div className="grid md:grid-cols-2 gap-6">
-              {isLoading ? (
+          {isLoading ? (
         <p className="text-gray-500">Fetching visa details...</p>
       ) : visaPackages.length > 0 ? (
         <div className="grid md:grid-cols-2 gap-6">
-          {visaPackages.map((pkg) => (
-            <VisaCard key={pkg._id} {...pkg} />
-          ))}
-        </div>
+              {visaPackages.map((pkg, index) => (
+                <VisaCard key={index} {...pkg} />
+              ))}
+            </div>
       ) : (
         <p className="text-red-500 text-lg font-semibold">
           No visa available now for {countryName}.
         </p>
       )}
+            </div>
+            <div className="  w-[100%] flex flex-col ">
+              <Document />
+            </div>
+            <div>
+            </div>
+          </div>
+          <div className=" flex w-[100%] h-fit mb-[40px]">
+            <ApplicationForm footerRef={footerRef}  />
+          </div>
+
+        </div>
+        <VisaAcces  ref={footerRef}  />
+      </div>
+    )} */}
+    <div className="2xl:w-[1370px] font-Poppins w-[95%] md:w-[80%] mx-auto mt-[0px] p-3 md:p-6">
+        <h1 className="flex font-[600] text-[25px] md:text-[35px] mb-6">{`Types of ${countryName} Visas for Indians`}</h1>
+
+        <div className="grid grid-cols-1   lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2   flex flex-col gap-[30px]">
+            <div className="grid md:grid-cols-2 gap-6">
+              {visaPackages.map((pkg, index) => (
+                <VisaCard key={index} {...pkg} />
+              ))}
             </div>
             <div className="  w-[100%] flex flex-col ">
               <Document />
@@ -146,7 +164,6 @@ export default function VisaSection( { countryId }) {
         </div>
         <VisaAcces  ref={footerRef}  />
       </div>
-    )}
     </>
   )
 }
@@ -272,6 +289,8 @@ function ApplicationForm({ footerRef }) {
   }, []);
 
   
+  const totalPrice = selectedVisa ? selectedVisa.fees * Number(travellers) : 0;
+
 
   useEffect(() => {
     // Only run if footerRef.current exists.
@@ -422,7 +441,7 @@ function ApplicationForm({ footerRef }) {
               </select>
 
               <div className="flex justify-end items-center gap-2 pt-2 rounded-tl-[20px] rounded-br-[20px]">
-                <span className="text-[#1A1A1A] font-medium">₹0</span>
+                <span className="text-[#1A1A1A] font-medium">₹{totalPrice}</span>
                 <button
                   onClick={handleApplyNow}
                   className="bg-[#005f94] ml-[10px] text-white px-3 py-2 rounded-tl-[20px] rounded-br-[20px] font-medium"

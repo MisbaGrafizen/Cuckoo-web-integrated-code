@@ -11,6 +11,12 @@ import image22 from "../../../public/Gallery/img2.jpg";
 import image33 from "../../../public/Gallery/img3.jpg";
 import image44 from "../../../public/Gallery/img4.jpg";
 
+import {
+  Modal as NextUIModal,
+  ModalBody,
+  ModalContent,
+} from "@nextui-org/react";
+
 import dubaiWhite from "../../../public/visaCountry/Dubai-white.png";
 import dubaiColor from "../../../public/visaCountry/Dubai-color.png"; // Add color images
 import canadaWhite from "../../../public/visaCountry/Canada-white.png";
@@ -19,6 +25,8 @@ import parisWhite from "../../../public/visaCountry/Paris-white.png";
 import parisColor from "../../../public/visaCountry/Paris-color.png";
 import usaWhite from "../../../public/visaCountry/usa-white.png";
 import usaColor from "../../../public/visaCountry/usa-color.png";
+import HotelPopup from "../../Component/serchPopup/HotelPopup";
+
 
 import {
   Star,
@@ -48,7 +56,7 @@ import { ApiGet } from "../../helper/axios";
 //   distance: string;
 //   rating: number;
 //   reviews: number;
-//   originalPrice: number;
+//   basePrice: number;
 //   discountedPrice: number;
 //   taxes: number;
 //   amenities: string[];
@@ -65,9 +73,9 @@ const HotelCard = ({
   ratingText,
   ratings,
   sponsored,
-  originalPrice,
+  basePrice,
   discountedPrice,
-  taxes,
+  taxesAndFees,
   amenities,
   images,
   features = [],
@@ -259,14 +267,14 @@ const HotelCard = ({
 
           <div className="flex   z-[12] mt-[20px]    md:justify-end">
             <div className="md:text-right w-[100%] ">
-              {originalPrice && (
+              {basePrice && (
                 <div className="text-[#4a4a4a] text-left text-[10px] line-through text-base">
-                  ₹{originalPrice?.toLocaleString()}
+                  {/* ₹{basePrice?.toLocaleString()} */}
                 </div>
               )}
               <div className="flex items-baseline gap-2 md:justify-end">
                 <span className="text-[22px] font-[600]  text-black">
-                  ₹{discountedPrice?.toLocaleString()}
+                  ₹{basePrice?.toLocaleString()}
                 </span>
               </div>
 
@@ -274,7 +282,7 @@ const HotelCard = ({
 
 
                 <div className="text-sm text-[400] w-fit md:w-fit md:text-right flex justify-end text -[12] text-[#4a4a4a]  ">
-                  + ₹{taxes?.toLocaleString()} taxes & fees
+                  + ₹{taxesAndFees?.toLocaleString()} taxes & fees
                 </div>
 
               </div>
@@ -331,6 +339,7 @@ export default function RoomListing() {
     const fetchHotels = async () => {
       try {
         const response = await ApiGet("/admin/rooms");
+        console.log("room response", rooms)
         setHotels(response.room);
       } catch (error) {
         console.error("Error fetching hotels:", error);
@@ -340,7 +349,7 @@ export default function RoomListing() {
     fetchHotels();
   }, []);
 
-  console.log('rooms', rooms)
+  console.log('rooms', hotels)
 
 
   const formatPlaceholder = (dates) => { };
@@ -374,7 +383,7 @@ export default function RoomListing() {
   //     ratingText: "Excellent",
   //     ratings: 29,
   //     sponsored: true,
-  //     originalPrice: null,
+  //     basePrice: null,
   //     discountedPrice: 19777,
   //     taxes: 3560,
   //     amenities: ["Gym", "Restaurant", "24-hour Room Service"],
@@ -391,7 +400,7 @@ export default function RoomListing() {
   //     ratingText: "Very Good",
   //     ratings: 8074,
   //     sponsored: false,
-  //     originalPrice: 26018,
+  //     basePrice: 26018,
   //     discountedPrice: 19563,
   //     taxes: 5971,
   //     amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
@@ -409,7 +418,7 @@ export default function RoomListing() {
   //     ratingText: "Very Good",
   //     ratings: 21,
   //     sponsored: false,
-  //     originalPrice: 29559,
+  //     basePrice: 29559,
   //     discountedPrice: 11295,
   //     taxes: 5601,
   //     amenities: ["Spa", "Swimming Pool", "Gym"],
@@ -427,7 +436,7 @@ export default function RoomListing() {
   //     ratingText: "Very Good",
   //     ratings: 74,
   //     sponsored: false,
-  //     originalPrice: 26018,
+  //     basePrice: 26018,
   //     discountedPrice: 19563,
   //     taxes: 5971,
   //     amenities: ["Jacuzzi", "Spa", "Swimming Pool"],
@@ -471,6 +480,14 @@ export default function RoomListing() {
         : [...prev, amenity]
     );
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -483,26 +500,21 @@ export default function RoomListing() {
             Visa
             </span>
           </h1> */}
-        <div className=" flex  font-Poppins  overflow-x-auto  w-[100%] gap-[18px]" >
-          {packgesButton.map((btn) => (
-            <button
-              key={btn.id}
-              onClick={() => setSelectedId(btn.id)}
-              className={`w-fit h-fit py-[10px] px-[12px] gap-[8px] flex items-center text-[16px] flex-shrink-0 rounded-tl-[11px] rounded-br-[11px] ${selectedId === btn.id
-                ? "bg-[#005f94] text-[#fff]"
-                : "border border-[#005f94] text-[#005f94] bg-transparent"
-                }`}
-            >
-              <img
-                className="w-[23px] h-[23px]"
-                src={selectedId === btn.id ? btn.whiteImg : btn.colorImg}
-                alt={btn.text}
-              />
-              {btn.text}
-            </button>
-          ))}
-        </div>
+         <div className=" hidden md:flex   2xl:w-[1390px]  w-[100%] md:w-[75%] mx-auto relative items-center justify-between ">
 
+          <div className=" w-[100%]  top-[66px]  absolute h-[1px] bg-[#d7d7d7]">
+
+          </div>
+          <div className="  z-[10] font-Poppins mx-auto mt-[43px] px-[13px] flex w-[390px] bg-white  gap-[10px] rounded-[26px] border-[1.5px] custom-sahdow overflow-hidden items-center justify-start h-[45px]" onClick={handleOpenModal}>
+            <i className="fa-solid text-[#515151] fa-magnifying-glass"></i>
+            <input
+              className=" w-[100%] h-[100%]  text-[14px] outline-none"
+              placeholder=" Serch Hotels"
+              type="text"
+            />
+          </div>
+
+          </div>
 
       </div>
 
@@ -574,7 +586,7 @@ export default function RoomListing() {
                   //     : "rotate(-45deg)",
                   // }}
                   >
-                    <i class={` text-[17px] fa-solid  ${isAmenitiesOpen ? 'fa-minus' : ' fa-plus '}`}></i>
+                    <i className={` text-[17px] fa-solid  ${isAmenitiesOpen ? 'fa-minus' : ' fa-plus '}`}></i>
                   </span>
                 </button>
 
@@ -640,7 +652,7 @@ export default function RoomListing() {
                   //     : "rotate(-45deg)",
                   // }}
                   >
-                    <i class={` text-[17px] fa-solid  ${isRatingOpen ? 'fa-minus' : ' fa-plus '}`}></i>
+                    <i className={` text-[17px] fa-solid  ${isRatingOpen ? 'fa-minus' : ' fa-plus '}`}></i>
                   </span>
                 </button>
 
@@ -707,6 +719,23 @@ export default function RoomListing() {
       </div>
 
       <Footer />
+      <NextUIModal
+        className=" bg-transparent  !max-w-[500px]  font-Poppins shadow-none"
+        isOpen={isModalOpen}
+        onOpenChange={handleCloseModal}
+      >
+        <ModalContent className="w-[100%] ">
+          <ModalBody className=" w-[100%] ">
+
+          <HotelPopup
+              onClose={() => setIsModalOpen(false)}
+              hotels={hotels}
+              setHotels={setHotels}
+            />
+
+          </ModalBody>
+        </ModalContent>
+      </NextUIModal>
     </>
   );
 }

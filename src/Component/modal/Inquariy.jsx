@@ -67,7 +67,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                         setNameFocused(e.target.value !== "")
                                     }
                                     className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                    autocomplete="naqsme"
+                                    autoComplete="naqsme"
                                 />
                             </div>
                           
@@ -99,7 +99,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                             setNumberFocused(e.target.value !== "")
                                         }
                                         className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                        autocomplete="naqsme"
+                                        autoComplete="naqsme"
                                     />
                                 </div>
                             </div>
@@ -124,7 +124,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                         setEmailFocused(e.target.value !== "")
                                     }
                                     className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                    autocomplete="naqsme"
+                                    autoComplete="naqsme"
                                 />
                             </div>
 
@@ -162,7 +162,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                             setPersonFocused(e.target.value !== "")
                                         }
                                         className="w-full outline-none  px-[10px] text-[15px]   py-[9px] font-Poppins font-[400] bg-transparent"
-                                        autocomplete="naqsme"
+                                        autoComplete="naqsme"
                                     />
                                 </div>
                             </div>
@@ -188,7 +188,7 @@ export default function Inquariy({ isOpen, closeAndResetModal }) {
                                 setMessageFocused(e.target.value !== "")
                             }
                             className="w-full outline-none  px-[10px] text-[15px]  h-[100%]  py-[9px] font-Poppins font-[400] bg-transparent"
-                            autocomplete="naqsme"
+                            autoComplete="naqsme"
                         ></textarea>
                         </div>
               <button

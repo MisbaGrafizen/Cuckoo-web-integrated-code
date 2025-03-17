@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dubai from "../../../public/Header/dubai.png";
-import singapore from "../../../public/Header/singapore.png";
-import thaiLand from "../../../public/Header/thailand.jpg";
 import logo from "../../../public/Header/logo.png";
 import flag from "../../../public/Header/flag.png";
 import singaPore from "../../../public/newIconHeader/merlion-park.png"
@@ -9,12 +7,19 @@ import thailand from "../../../public/newIconHeader/sanctuary-of-truth.png"
 import japan from "../../../public/newIconHeader/nepal.png"
 import Kashmir from "../../../public/newIconHeader/kashmir.png"
 import usa from "../../../public/newIconHeader/usa.png"
-import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import HolidaysPopup from "../serchPopup/HolidaysPopup";
 import VisaPopup from "../serchPopup/VisaPopup";
 import HotelPopup from "../serchPopup/HotelPopup";
+import holidayWhite from "../../../public/headerIcon/holiday-white.png";
+import holidayBlack from "../../../public/headerIcon/holiday-black.png";
+import hotelWhite from "../../../public/headerIcon/hotel-white.png";
+import hotelBlack from "../../../public/headerIcon/hotel-black.png";
+import visaWhite from "../../../public/headerIcon/visa-white.png";
+import visaBlack from "../../../public/headerIcon/visa-black.png";
+import passportWhite from "../../../public/headerIcon/passport-white.png";
+import passportBlack from "../../../public/headerIcon/passport-black.png";
 
 // const destinations = [
 //   "Dubai, UAE",
@@ -219,40 +224,56 @@ export default function Header() {
                   <div className="relative flex gap-3 items-center border-[1px] border-[#cbcbcb] rounded-lg p-[5px] bg-white">
                     {/* Moving Slider */}
                     <div
-                      className="absolute top-[3px] left-1 h-[40px] w-[85px] rounded-md bg-[#005f94] transition-transform duration-300 ease-in-out"
+                      className="absolute top-[3px] left-1 h-[45px] w-[105px] rounded-md bg-[#005f94] transition-transform duration-300 ease-in-out"
                       style={{
                         transform: activeVisaButton === "holiday"
                           ? "translateX(0px)"
                           : activeVisaButton === "passport"
-                            ? "translateX(98px)"
-                            : "translateX(194px)",
+                            ? "translateX(120px)"
+                            : "translateX(235px)",
                       }}
                     ></div>
 
                     {/* Holidays Button */}
                     <button
-                      className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "holiday" ? "text-white" : "text-black"
+                      className={`relative z-10 w-[105px] text-sm flex gap-[5px] items-center rounded-md p-2 text-center transition-all ${activeVisaButton === "holiday" ? "text-white" : "text-black"
                         }`}
                       onClick={() => handleNavigation("/")}
                     >
+                      <img
+                        className="w-[25px] h-[25px]"
+                        src={activeVisaButton === "holiday" ? holidayWhite : holidayBlack}
+                        alt="Holidays"
+                      />
                       Holidays
                     </button>
 
                     {/* Passport Button */}
                     <button
-                      className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "passport" ? "text-white" : "text-black"
+                      className={`relative z-10 w-[105px] text-sm flex gap-[5px] items-center  rounded-md p-2 text-center transition-all ${activeVisaButton === "passport" ? "text-white" : "text-black"
                         }`}
                       onClick={() => handleNavigation("/passport")}
                     >
+
+<img
+                        className="w-[25px] h-[25px]"
+                        src={activeVisaButton === "passport" ? passportWhite : passportBlack}
+                        alt="passport"
+                      />
                       Passport
                     </button>
 
                     {/* Visa Button */}
                     <button
-                      className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "visa" ? "text-white" : "text-black"
+                      className={`relative z-10 w-[105px] text-sm flex pl-[20px]  gap-[5px] items-center  rounded-md p-2 text-center transition-all ${activeVisaButton === "visa" ? "text-white" : "text-black"
                         }`}
                       onClick={() => handleNavigation("/visa")}
                     >
+                           <img
+                          className="w-[25px] h-[25px]"
+                          src={activeVisaButton === "visa" ? visaWhite : visaBlack}
+                          alt="Visa"
+                        />
                       Visa
                     </button>
                   </div>
@@ -264,40 +285,56 @@ export default function Header() {
                     <div className="relative flex gap-3 items-center border-[1px] border-[#cbcbcb] rounded-lg p-[5px] bg-white">
                       {/* Moving Slider */}
                       <div
-                        className="absolute top-[3px] left-1 h-[40px] w-[85px] rounded-md bg-[#005f94] transition-transform duration-300 ease-in-out"
+                        className="absolute top-[3px] left-1 h-[45px] w-[105px] rounded-md bg-[#005f94] transition-transform duration-300 ease-in-out"
                         style={{
-                          transform: activeVisaButton === "holiday"
-                            ? "translateX(0px)"
-                            : activeVisaButton === "passport"
-                              ? "translateX(20px)"
-                              : "translateX(97px)",
+                          transform:
+                            activeVisaButton === "holiday"
+                              ? "translateX(0px)"
+                              : activeVisaButton === "hotels"
+                                ? "translateX(115px)"
+                                : "translateX(230px)",
                         }}
                       ></div>
 
                       {/* Holidays Button */}
                       <button
-                        className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "holiday" ? "text-white" : "text-black"
+                        className={`relative z-10 w-[105px] text-sm rounded-md p-2 gap-[5px]  items-center flex text-center transition-all ${activeVisaButton === "holiday" ? "text-white" : "text-black"
                           }`}
-                        onClick={() => handleNavigation("/")}
+                        onClick={() => handleNavigation("/", "holiday")}
                       >
+                        <img
+                          className="w-[25px] h-[25px]"
+                          src={activeVisaButton === "holiday" ? holidayWhite : holidayBlack}
+                          alt="Holidays"
+                        />
                         Holidays
                       </button>
 
-                      {/* Passport Button */}
+                      {/* Hotels Button */}
                       <button
-                        className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "hotels" ? "text-white" : "text-black"
+                        className={`relative z-10 w-[105px] text-sm rounded-md p-2   items-center flex gap-[8px] text-center transition-all ${activeVisaButton === "hotels" ? "text-white" : "text-black"
                           }`}
-                        onClick={() => handleNavigation("/hotels")}
+                        onClick={() => handleNavigation("/hotels", "hotels")}
                       >
+                        <img
+                          className="w-[25px] h-[25px]"
+                          src={activeVisaButton === "hotels" ? hotelWhite : hotelBlack}
+                          alt="Hotels"
+                        />
                         Hotels
                       </button>
 
                       {/* Visa Button */}
                       <button
-                        className={`relative z-10 w-[85px] text-sm rounded-md p-2 text-center transition-all ${activeVisaButton === "visa" ? "text-white" : "text-black"
+                        className={`relative z-10 w-[105px] text-sm flex pl-[20px]    items-center rounded-md gap-[5px] p-2 text-center transition-all ${activeVisaButton === "visa" ? "text-white" : "text-black"
                           }`}
-                        onClick={() => handleNavigation("/visa")}
+                        onClick={() => handleNavigation("/visa", "visa")}
                       >
+                        <img
+                          className="w-[25px] h-[25px]"
+                          src={activeVisaButton === "visa" ? visaWhite : visaBlack}
+                          alt="Visa"
+                        />
                         Visa
                       </button>
                     </div>
@@ -325,7 +362,7 @@ export default function Header() {
                     )}
                   </div>
                 ))}
-         
+
 
 
               </div>

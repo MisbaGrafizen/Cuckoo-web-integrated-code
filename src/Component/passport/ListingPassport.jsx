@@ -494,7 +494,7 @@ function ApplicationForm({ selectedVisa, setSelectedVisa, travellers, setTravell
                 <input
                   type="tel"
                   placeholder="Contact No"
-                  name="phoneNumber"
+                  name="phone"
                   value={formData?.phone}
                   onChange={handleChange}
                   className="w-full p-3 border border-[#E5E5E5] rounded text-sm focus:outline-none focus:border-[#005f94]"
